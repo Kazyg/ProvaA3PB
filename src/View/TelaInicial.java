@@ -133,6 +133,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
         menuRegistro.setText("Registros");
 
+        menuItemEmprestimo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ICONS/icons 1/application_add.png"))); // NOI18N
         menuItemEmprestimo.setText("Registro de Emprestimos");
         menuItemEmprestimo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -57,7 +57,7 @@ public class TelaRelatorioAtivos extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Nome", "Ferramenta", "Situação", "Data de Empréstimo", "Data de Devolução"
+                "Nome", "Ferramenta", "Situação", "Data de Empréstimo", "Data de Entrega"
             }
         ));
         TableRelatorioAtivos.setName("Relatório de empréstimos ativos"); // NOI18N

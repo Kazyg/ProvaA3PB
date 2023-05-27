@@ -97,7 +97,7 @@
                         <Column editable="true" title="Ferramenta" type="java.lang.Object"/>
                         <Column editable="true" title="Situa&#xe7;&#xe3;o" type="java.lang.Object"/>
                         <Column editable="true" title="Data de Empr&#xe9;stimo" type="java.lang.Object"/>
-                        <Column editable="true" title="Data de Devolu&#xe7;&#xe3;o" type="java.lang.Object"/>
+                        <Column editable="true" title="Data de Entrega" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

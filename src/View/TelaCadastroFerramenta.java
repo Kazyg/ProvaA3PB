@@ -26,25 +26,93 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
+
+        TelaCadastroDeFerramenta = new javax.swing.JPanel();
+        txtfildregNomeFerramenta = new javax.swing.JTextField();
+        txtfildregMarcaFerramenta = new javax.swing.JTextField();
+        txtfildregCustoFerramenta = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        btnRegFerramenta = new javax.swing.JButton();
+        btnregferranentaVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        TelaCadastroDeFerramenta.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastro de Ferramentas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+
+        jLabel1.setText("Nome:");
+
+        jLabel2.setText("Marca:");
+
+        jLabel3.setText("Custo:");
+
+        btnRegFerramenta.setText("Registrar");
+
+        btnregferranentaVoltar.setText("Voltar");
+
+        javax.swing.GroupLayout TelaCadastroDeFerramentaLayout = new javax.swing.GroupLayout(TelaCadastroDeFerramenta);
+        TelaCadastroDeFerramenta.setLayout(TelaCadastroDeFerramentaLayout);
+        TelaCadastroDeFerramentaLayout.setHorizontalGroup(
+            TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(TelaCadastroDeFerramentaLayout.createSequentialGroup()
+                .addGap(103, 103, 103)
+                .addGroup(TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(TelaCadastroDeFerramentaLayout.createSequentialGroup()
+                        .addGap(113, 113, 113)
+                        .addComponent(btnregferranentaVoltar))
+                    .addComponent(btnRegFerramenta)
+                    .addGroup(TelaCadastroDeFerramentaLayout.createSequentialGroup()
+                        .addGroup(TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(TelaCadastroDeFerramentaLayout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addGroup(TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtfildregMarcaFerramenta)
+                                    .addComponent(txtfildregNomeFerramenta, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(TelaCadastroDeFerramentaLayout.createSequentialGroup()
+                                .addGap(56, 56, 56)
+                                .addComponent(txtfildregCustoFerramenta, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(109, Short.MAX_VALUE))
+        );
+        TelaCadastroDeFerramentaLayout.setVerticalGroup(
+            TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(TelaCadastroDeFerramentaLayout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtfildregNomeFerramenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(34, 34, 34)
+                .addGroup(TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtfildregMarcaFerramenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(35, 35, 35)
+                .addGroup(TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtfildregCustoFerramenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addGroup(TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRegFerramenta)
+                    .addComponent(btnregferranentaVoltar))
+                .addGap(58, 58, 58))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(129, 129, 129)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(171, Short.MAX_VALUE))
+
+            .addComponent(TelaCadastroDeFerramenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(160, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(TelaCadastroDeFerramenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -86,6 +154,14 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel TelaCadastroDeFerramenta;
+    private javax.swing.JButton btnRegFerramenta;
+    private javax.swing.JButton btnregferranentaVoltar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JTextField txtfildregCustoFerramenta;
+    private javax.swing.JTextField txtfildregMarcaFerramenta;
+    private javax.swing.JTextField txtfildregNomeFerramenta;
     // End of variables declaration//GEN-END:variables
 }

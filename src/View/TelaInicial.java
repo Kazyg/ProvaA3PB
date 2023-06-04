@@ -92,6 +92,11 @@ public class TelaInicial extends javax.swing.JFrame {
 
         menuItemAmigos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ICONS/icons 1/group_add.png"))); // NOI18N
         menuItemAmigos.setText("Amigos");
+        menuItemAmigos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemAmigosActionPerformed(evt);
+            }
+        });
         MenuCadastro.add(menuItemAmigos);
 
         menuItemCadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ICONS/icons 1/add.png"))); // NOI18N
@@ -127,6 +132,11 @@ public class TelaInicial extends javax.swing.JFrame {
 
         menuItemTodosRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ICONS/icons 1/application_view_list.png"))); // NOI18N
         menuItemTodosRelatorios.setText("Todas os relatórios");
+        menuItemTodosRelatorios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemTodosRelatoriosActionPerformed(evt);
+            }
+        });
         MenuRelatorio.add(menuItemTodosRelatorios);
 
         jMenuBar1.add(MenuRelatorio);
@@ -148,6 +158,11 @@ public class TelaInicial extends javax.swing.JFrame {
 
         menuItemAgenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ICONS/icons 1/date_add.png"))); // NOI18N
         menuItemAgenda.setText("Agenda");
+        menuItemAgenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemAgendaActionPerformed(evt);
+            }
+        });
         menuAgenda.add(menuItemAgenda);
 
         jMenuBar1.add(menuAgenda);
@@ -182,24 +197,36 @@ public class TelaInicial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuItemCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCadastroActionPerformed
-        // TODO add your handling code here:
+        new TelaCadastroFerramenta().setVisible(true);
     }//GEN-LAST:event_menuItemCadastroActionPerformed
 
     private void menuItemAtivosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAtivosActionPerformed
-        // TODO add your handling code here:
+        new TelaRelatorioAtivos().setVisible(true);
     }//GEN-LAST:event_menuItemAtivosActionPerformed
 
     private void menuItemFerramentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemFerramentasActionPerformed
-        // TODO add your handling code here:
+        new TelaRelatorioFerramentas().setVisible(true);
     }//GEN-LAST:event_menuItemFerramentasActionPerformed
 
     private void menuItemEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemEmprestimoActionPerformed
-        // TODO add your handling code here:
+        new TelaRegistrarEmprestimo().setVisible(true);
     }//GEN-LAST:event_menuItemEmprestimoActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void menuItemAmigosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAmigosActionPerformed
+        new TelaCadastroAmigo().setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_menuItemAmigosActionPerformed
+
+    private void menuItemTodosRelatoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemTodosRelatoriosActionPerformed
+        new TelaTodosRelatorios().setVisible(true);
+    }//GEN-LAST:event_menuItemTodosRelatoriosActionPerformed
+
+    private void menuItemAgendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAgendaActionPerformed
+        new TelaAgenda().setVisible(true);
+    }//GEN-LAST:event_menuItemAgendaActionPerformed
 
     /**
      * @param args the command line arguments

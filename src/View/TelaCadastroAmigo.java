@@ -1,20 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package View;
+
+import Model.Amigo;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author guilherme
  */
 public class TelaCadastroAmigo extends javax.swing.JFrame {
-
-    /**
-     * Creates new form TelaCadastroAmigo
-     */
+    
+    private final Amigo objetoamigo;
+ 
     public TelaCadastroAmigo() {
         initComponents();
+        this.objetoamigo = new Amigo();
+        
     }
 
     /**
@@ -28,14 +28,14 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
 
         TelaCadastroDeAmigo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        Nome = new javax.swing.JLabel();
+        Telefone = new javax.swing.JLabel();
+        Email = new javax.swing.JLabel();
         txtNomeAmigo = new javax.swing.JTextField();
-        txtFildTelefone = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        txtTelefone = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
+        B_Registrar = new javax.swing.JButton();
+        B_Voltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -43,11 +43,11 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
 
         jLabel1.setText("Insira os dados do amigo");
 
-        jLabel2.setText("Nome:");
+        Nome.setText("Nome:");
 
-        jLabel3.setText("Telefone:");
+        Telefone.setText("Telefone:");
 
-        jLabel4.setText("Email:");
+        Email.setText("Email:");
 
         txtNomeAmigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -55,18 +55,23 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
             }
         });
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                txtEmailActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Registrar");
-
-        jButton2.setText("Voltar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        B_Registrar.setText("Registrar");
+        B_Registrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                B_RegistrarActionPerformed(evt);
+            }
+        });
+
+        B_Voltar.setText("Voltar");
+        B_Voltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                B_VoltarActionPerformed(evt);
             }
         });
 
@@ -82,26 +87,26 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
                     .addGroup(TelaCadastroDeAmigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, TelaCadastroDeAmigoLayout.createSequentialGroup()
                             .addGap(95, 95, 95)
-                            .addComponent(jButton1)
+                            .addComponent(B_Registrar)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2))
+                            .addComponent(B_Voltar))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, TelaCadastroDeAmigoLayout.createSequentialGroup()
                             .addGap(110, 110, 110)
                             .addGroup(TelaCadastroDeAmigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel3)
+                                .addComponent(Telefone)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, TelaCadastroDeAmigoLayout.createSequentialGroup()
                                     .addGroup(TelaCadastroDeAmigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(Nome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(Email, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGap(12, 12, 12)))
                             .addGroup(TelaCadastroDeAmigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(TelaCadastroDeAmigoLayout.createSequentialGroup()
                                     .addGap(18, 18, 18)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(TelaCadastroDeAmigoLayout.createSequentialGroup()
                                     .addGap(31, 31, 31)
                                     .addGroup(TelaCadastroDeAmigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtFildTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
+                                        .addComponent(txtTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
                                         .addComponent(txtNomeAmigo)))))))
                 .addContainerGap(73, Short.MAX_VALUE))
         );
@@ -112,20 +117,20 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(31, 31, 31)
                 .addGroup(TelaCadastroDeAmigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(Nome)
                     .addComponent(txtNomeAmigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(TelaCadastroDeAmigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(txtFildTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Telefone)
+                    .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(TelaCadastroDeAmigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Email))
                 .addGap(29, 29, 29)
                 .addGroup(TelaCadastroDeAmigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(B_Registrar)
+                    .addComponent(B_Voltar))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
@@ -147,13 +152,39 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeAmigoActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_txtEmailActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void B_VoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_VoltarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_B_VoltarActionPerformed
+
+    private void B_RegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_RegistrarActionPerformed
+    try{
+        String nome = "";
+        int telefone = 0;
+        String email = "";
+        
+        if (this.txtNomeAmigo.getText().length()< 2){
+            JOptionPane.showMessageDialog("Nome deve conter ao menos dois caracteres");
+        }else{
+                nome = this.txtNomeAmigo.getText();
+            }
+        if (this.txtTelefone.getText().length() <=0){
+            JOptionPane.showMessageDialog("Telefone deve ser numero e maior que zero");
+        }else {
+            telefone = Integer.parseInt(this.txtTelefone.getText());
+        }    
+        if (this.txtEmail.getText().length()<5){
+            JOptionPane.showMessageDialog("Email deve conter mais de cinco caracteres");
+        }else{
+            email = this.txtEmail.getText().length();
+        }    
+        
+          
+    
+    }//GEN-LAST:event_B_RegistrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,15 +222,15 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton B_Registrar;
+    private javax.swing.JButton B_Voltar;
+    private javax.swing.JLabel Email;
+    private javax.swing.JLabel Nome;
     private javax.swing.JPanel TelaCadastroDeAmigo;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel Telefone;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField txtFildTelefone;
+    private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNomeAmigo;
+    private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
 }

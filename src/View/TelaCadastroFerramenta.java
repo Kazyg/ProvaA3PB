@@ -26,6 +26,7 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+
         TelaCadastroDeFerramenta = new javax.swing.JPanel();
         txtfildregNomeFerramenta = new javax.swing.JTextField();
         txtfildregMarcaFerramenta = new javax.swing.JTextField();
@@ -103,6 +104,7 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+
             .addComponent(TelaCadastroDeFerramenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(

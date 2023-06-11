@@ -1,27 +1,33 @@
-
 package Model;
+
 public class Amigo {
-    private String id;
+
+    private int id;
     private String nome;
     private String telefone;
     private String email;
+
     // Construtores vazio    
     public Amigo() {
     }
-    // Construtores com atributos
-    public Amigo(String id, String nome, String telefone, String email) {
+
+    public Amigo(int id, String nome, String telefone, String email) {
         this.id = id;
         this.nome = nome;
         this.telefone = telefone;
         this.email = email;
     }
-    // Construtores get e set
-    public String getId() {
-        return id;
+
+    // Construtores com atributos
+    public Amigo(String nome, String telefone, String email) {
+        this.id = 0;
+        this.nome = nome;
+        this.telefone = telefone;
+        this.email = email;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public int getId() {
+        return id;
     }
 
     public String getNome() {
@@ -46,5 +52,9 @@ public class Amigo {
 
     public void setEmail(String email) {
         this.email = email;
-    }   
+    }
+
+    public void setId(int aInt) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

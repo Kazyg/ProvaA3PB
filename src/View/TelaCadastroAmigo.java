@@ -1,6 +1,9 @@
 package View;
 
+import DAO.AmigoDAO;
 import Model.Amigo;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -8,13 +11,13 @@ import javax.swing.JOptionPane;
  * @author guilherme
  */
 public class TelaCadastroAmigo extends javax.swing.JFrame {
-    
-    private final Amigo objetoamigo;
- 
+
+    private final AmigoDAO objetoamigo;
+
     public TelaCadastroAmigo() {
         initComponents();
-        this.objetoamigo = new Amigo();
-        
+        this.objetoamigo = new AmigoDAO();
+
     }
 
     /**
@@ -157,33 +160,56 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
     }//GEN-LAST:event_txtEmailActionPerformed
 
     private void B_VoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_VoltarActionPerformed
-        // TODO add your handling code here:
+        this.setVisible(false);
     }//GEN-LAST:event_B_VoltarActionPerformed
 
     private void B_RegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_RegistrarActionPerformed
-    try{
-        String nome = "";
-        int telefone = 0;
-        String email = "";
-        
-        if (this.txtNomeAmigo.getText().length()< 2){
-            JOptionPane.showMessageDialog("Nome deve conter ao menos dois caracteres");
-        }else{
-                nome = this.txtNomeAmigo.getText();
+        try {
+
+            String nome = "", telefone = "", email = "";
+            int id = 0;
+
+            nome = this.txtNomeAmigo.getText();
+            telefone = this.txtTelefone.getText();
+            email = this.txtEmail.getText();
+
+            if (nome.length() < 3) {
+                throw new MensagensException("Preencha um nome valido");
             }
-        if (this.txtTelefone.getText().length() <=0){
-            JOptionPane.showMessageDialog("Telefone deve ser numero e maior que zero");
-        }else {
-            telefone = Integer.parseInt(this.txtTelefone.getText());
-        }    
-        if (this.txtEmail.getText().length()<5){
-            JOptionPane.showMessageDialog("Email deve conter mais de cinco caracteres");
-        }else{
-            email = this.txtEmail.getText().length();
-        }    
-        
-          
-    
+
+            if (!telefone.matches("\\d{11}")) {
+                throw new MensagensException("Insira um telefone valido com DDD");
+            }
+
+            if (!email.contains("@") || !email.contains(".com")) {
+                throw new MensagensException("Insira um endereço de email válido.");
+            }
+
+            ArrayList<Amigo> listaAmigo = objetoamigo.getMinhaLista();
+
+            for (Amigo amigo : listaAmigo) {
+                if (amigo.getTelefone().equals(telefone)) {
+                    throw new MensagensException("O telefone já está cadastrado.");
+                }
+                if (amigo.getEmail().equals(email)) {
+                    throw new MensagensException("O email já está cadastrado.");
+                }
+            }
+
+            this.objetoamigo.InsertAmigoBD(id, nome, telefone, email);
+
+            this.txtNomeAmigo.setText("");
+            this.txtTelefone.setText("");
+            this.txtEmail.setText("");
+            JOptionPane.showMessageDialog(rootPane, "Amigo cadastrado com sucesso");
+            System.out.println(this.objetoamigo.getMinhaLista().toString());
+
+        } catch (MensagensException erro) {
+            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
+        } catch (SQLException erro) {
+        }
+
+
     }//GEN-LAST:event_B_RegistrarActionPerformed
 
     /**

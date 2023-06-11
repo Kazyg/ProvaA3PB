@@ -3,44 +3,28 @@ package Model;
 import java.util.*;
 
 public class Emprestimo {
+
     private int Id;
-    private String NomeAmigo;
-    private String NomeFerramenta;
+    private Date DataPrevistaDevolucao;
     private Date DataRetirada;
-    private Date DataDevolucao;
-    
-    public Emprestimo(){
-}
-    public Emprestimo (int Id, String NomeAmigo, String NomeFerramenta, Date DataRetirada, Date DataDevolucao){
-        this.Id = Id;
-        this.NomeAmigo = NomeAmigo;
-        this.NomeFerramenta = NomeFerramenta;
+    private Date DataEfetivaDevolucao;
+
+    public Emprestimo() {
+    }
+
+    public Emprestimo(Date DataPrevistaDevolucao, Date DataRetirada, Date DataEfetivaDevolucao) {
+        this.Id = 0;
+        this.DataPrevistaDevolucao = DataPrevistaDevolucao;
         this.DataRetirada = DataRetirada;
-        this.DataDevolucao = DataDevolucao;
-}
-
-    public int getId() {
-        return Id;
+        this.DataEfetivaDevolucao = DataEfetivaDevolucao;
     }
 
-    public void setId(int Id) {
-        this.Id = Id;
+    public Date getDataPrevistaDevolucao() {
+        return DataPrevistaDevolucao;
     }
 
-    public String getNomeAmigo() {
-        return NomeAmigo;
-    }
-
-    public void setNomeAmigo(String NomeAmigo) {
-        this.NomeAmigo = NomeAmigo;
-    }
-
-    public String getNomeFerramenta() {
-        return NomeFerramenta;
-    }
-
-    public void setNomeFerramenta(String NomeFerramenta) {
-        this.NomeFerramenta = NomeFerramenta;
+    public void setDataPrevistaDevolucao(Date DataPrevistaDevolucao) {
+        this.DataPrevistaDevolucao = DataPrevistaDevolucao;
     }
 
     public Date getDataRetirada() {
@@ -51,16 +35,12 @@ public class Emprestimo {
         this.DataRetirada = DataRetirada;
     }
 
-    public Date getDataDevolucao() {
-        return DataDevolucao;
+    public Date getDataEfetivaDevolucao() {
+        return DataEfetivaDevolucao;
     }
 
     public void setDataDevolucao(Date DataDevolucao) {
-        this.DataDevolucao = DataDevolucao;
+        this.DataEfetivaDevolucao = DataDevolucao;
     }
 
-    
-
-            
-    
 }

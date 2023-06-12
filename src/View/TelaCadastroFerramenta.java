@@ -4,17 +4,24 @@
  */
 package View;
 
+import DAO.FerramentaDAO;
+import Model.Ferramenta;
+import static java.lang.Double.parseDouble;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author guilherme
  */
 public class TelaCadastroFerramenta extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TelaCadastroFerramenta
-     */
+    private final FerramentaDAO objetoferramenta;
+
     public TelaCadastroFerramenta() {
         initComponents();
+        this.objetoferramenta = new FerramentaDAO();
     }
 
     /**
@@ -26,11 +33,10 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-
         TelaCadastroDeFerramenta = new javax.swing.JPanel();
-        txtfildregNomeFerramenta = new javax.swing.JTextField();
-        txtfildregMarcaFerramenta = new javax.swing.JTextField();
-        txtfildregCustoFerramenta = new javax.swing.JTextField();
+        txtNomeFerramenta = new javax.swing.JTextField();
+        txtMarcaFerramenta = new javax.swing.JTextField();
+        txtCustoFerramenta = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -41,6 +47,12 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
 
         TelaCadastroDeFerramenta.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Cadastro de Ferramentas", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
 
+        txtMarcaFerramenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMarcaFerramentaActionPerformed(evt);
+            }
+        });
+
         jLabel1.setText("Nome:");
 
         jLabel2.setText("Marca:");
@@ -48,34 +60,45 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
         jLabel3.setText("Custo:");
 
         btnRegFerramenta.setText("Registrar");
+        btnRegFerramenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegFerramentaActionPerformed(evt);
+            }
+        });
 
         btnregferranentaVoltar.setText("Voltar");
+        btnregferranentaVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnregferranentaVoltarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout TelaCadastroDeFerramentaLayout = new javax.swing.GroupLayout(TelaCadastroDeFerramenta);
         TelaCadastroDeFerramenta.setLayout(TelaCadastroDeFerramentaLayout);
         TelaCadastroDeFerramentaLayout.setHorizontalGroup(
             TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TelaCadastroDeFerramentaLayout.createSequentialGroup()
-                .addGap(103, 103, 103)
                 .addGroup(TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(TelaCadastroDeFerramentaLayout.createSequentialGroup()
-                        .addGap(113, 113, 113)
-                        .addComponent(btnregferranentaVoltar))
-                    .addComponent(btnRegFerramenta)
+                        .addGap(103, 103, 103)
+                        .addGroup(TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(TelaCadastroDeFerramentaLayout.createSequentialGroup()
+                                .addGap(113, 113, 113)
+                                .addComponent(btnregferranentaVoltar))
+                            .addComponent(btnRegFerramenta)))
                     .addGroup(TelaCadastroDeFerramentaLayout.createSequentialGroup()
+                        .addGap(81, 81, 81)
                         .addGroup(TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(44, 44, 44)
+                        .addGroup(TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtMarcaFerramenta)
+                            .addComponent(txtNomeFerramenta, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(TelaCadastroDeFerramentaLayout.createSequentialGroup()
-                                .addGap(39, 39, 39)
-                                .addGroup(TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtfildregMarcaFerramenta)
-                                    .addComponent(txtfildregNomeFerramenta, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(TelaCadastroDeFerramentaLayout.createSequentialGroup()
-                                .addGap(56, 56, 56)
-                                .addComponent(txtfildregCustoFerramenta, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtCustoFerramenta)
+                                .addGap(3, 3, 3)))))
                 .addContainerGap(109, Short.MAX_VALUE))
         );
         TelaCadastroDeFerramentaLayout.setVerticalGroup(
@@ -83,15 +106,15 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
             .addGroup(TelaCadastroDeFerramentaLayout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addGroup(TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtfildregNomeFerramenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNomeFerramenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(34, 34, 34)
                 .addGroup(TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtfildregMarcaFerramenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMarcaFerramenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(35, 35, 35)
                 .addGroup(TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtfildregCustoFerramenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCustoFerramenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                 .addGroup(TelaCadastroDeFerramentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -104,7 +127,6 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
             .addComponent(TelaCadastroDeFerramenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -117,6 +139,62 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRegFerramentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegFerramentaActionPerformed
+        try {
+
+            String nome = "", marca = "";
+            int id = 0;
+            double custo = 0;
+
+            nome = this.txtNomeFerramenta.getText().toLowerCase();
+            marca = this.txtMarcaFerramenta.getText().toLowerCase();
+
+            if (this.txtCustoFerramenta.getText().isEmpty()) {
+                throw new MensagensException("O campo de custo deve ser preenchido");
+            } else if (parseDouble(this.txtCustoFerramenta.getText()) == 0) {
+                throw new MensagensException("O campo de custo não pode ser 0");
+            }
+
+            custo = parseDouble(this.txtCustoFerramenta.getText());
+
+            if (nome.length() < 2) {
+                throw new MensagensException("Preencha um nome valido");
+            }
+
+            if (marca.length() < 3) {
+                throw new MensagensException("Insira uma marca de ferramenta valida");
+            }
+
+            ArrayList<Ferramenta> listaFerramenta = objetoferramenta.getMinhaLista();
+
+            for (Ferramenta ferramenta : listaFerramenta) {
+                if (ferramenta.getNome().equals(nome) && ferramenta.getMarca().equals(marca)) {
+                    throw new MensagensException("A ferramenta já está cadastrado.");
+                }
+            }
+
+            this.objetoferramenta.InsertFerramentaBD(id, nome, marca, custo);
+
+            this.txtNomeFerramenta.setText("");
+            this.txtMarcaFerramenta.setText("");
+            this.txtCustoFerramenta.setText("");
+            JOptionPane.showMessageDialog(rootPane, "Ferramenta cadastrada com sucesso");
+            System.out.println(this.objetoferramenta.getMinhaLista().toString());
+
+        } catch (MensagensException erro) {
+            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
+        } catch (SQLException erro) {
+        }
+    }//GEN-LAST:event_btnRegFerramentaActionPerformed
+
+    private void txtMarcaFerramentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMarcaFerramentaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMarcaFerramentaActionPerformed
+
+    private void btnregferranentaVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnregferranentaVoltarActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnregferranentaVoltarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -160,8 +238,8 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField txtfildregCustoFerramenta;
-    private javax.swing.JTextField txtfildregMarcaFerramenta;
-    private javax.swing.JTextField txtfildregNomeFerramenta;
+    private javax.swing.JTextField txtCustoFerramenta;
+    private javax.swing.JTextField txtMarcaFerramenta;
+    private javax.swing.JTextField txtNomeFerramenta;
     // End of variables declaration//GEN-END:variables
 }

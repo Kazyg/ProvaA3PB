@@ -169,9 +169,9 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
             String nome = "", telefone = "", email = "";
             int id = 0;
 
-            nome = this.txtNomeAmigo.getText();
+            nome = this.txtNomeAmigo.getText().toLowerCase();
             telefone = this.txtTelefone.getText();
-            email = this.txtEmail.getText();
+            email = this.txtEmail.getText().toLowerCase();
 
             if (nome.length() < 3) {
                 throw new MensagensException("Preencha um nome valido");

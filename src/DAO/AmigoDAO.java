@@ -85,15 +85,15 @@ public class AmigoDAO {
 
     }
 
-    public Amigo carregaAluno(int id) throws SQLException, MensagensException {
+    public Amigo carregaAmigo(int id) throws SQLException, MensagensException {
         Amigo objeto = new Amigo();
 
         Statement stmt = this.getConnection().createStatement();
         ResultSet res = stmt.executeQuery("SELECT * "
-                + "FROM tb_amigo WHERE id = " + id);
+                + "FROM tb_amigo WHERE idamigo = " + id);
         res.next();
 
-        objeto.setId(res.getInt("id"));
+        objeto.setId(res.getInt("idamigo"));
         objeto.setNome(res.getString("nome"));
         objeto.setTelefone(res.getString("telefone"));
         objeto.setEmail(res.getString("email"));

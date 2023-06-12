@@ -35,10 +35,10 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
         Telefone = new javax.swing.JLabel();
         Email = new javax.swing.JLabel();
         txtNomeAmigo = new javax.swing.JTextField();
-        txtTelefone = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         B_Registrar = new javax.swing.JButton();
         B_Voltar = new javax.swing.JButton();
+        txtTelefoneAmigo = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,6 +78,12 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
             }
         });
 
+        try {
+            txtTelefoneAmigo.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout TelaCadastroDeAmigoLayout = new javax.swing.GroupLayout(TelaCadastroDeAmigo);
         TelaCadastroDeAmigo.setLayout(TelaCadastroDeAmigoLayout);
         TelaCadastroDeAmigoLayout.setHorizontalGroup(
@@ -91,7 +97,7 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, TelaCadastroDeAmigoLayout.createSequentialGroup()
                             .addGap(95, 95, 95)
                             .addComponent(B_Registrar)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
                             .addComponent(B_Voltar))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, TelaCadastroDeAmigoLayout.createSequentialGroup()
                             .addGap(110, 110, 110)
@@ -102,15 +108,11 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
                                         .addComponent(Nome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(Email, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGap(12, 12, 12)))
-                            .addGroup(TelaCadastroDeAmigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(TelaCadastroDeAmigoLayout.createSequentialGroup()
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(TelaCadastroDeAmigoLayout.createSequentialGroup()
-                                    .addGap(31, 31, 31)
-                                    .addGroup(TelaCadastroDeAmigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                                        .addComponent(txtNomeAmigo)))))))
+                            .addGap(18, 18, 18)
+                            .addGroup(TelaCadastroDeAmigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                                .addComponent(txtTelefoneAmigo)
+                                .addComponent(txtNomeAmigo)))))
                 .addContainerGap(73, Short.MAX_VALUE))
         );
         TelaCadastroDeAmigoLayout.setVerticalGroup(
@@ -125,7 +127,7 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(TelaCadastroDeAmigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Telefone)
-                    .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTelefoneAmigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29)
                 .addGroup(TelaCadastroDeAmigoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -170,14 +172,14 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
             int id = 0;
 
             nome = this.txtNomeAmigo.getText().toLowerCase();
-            telefone = this.txtTelefone.getText();
+            telefone = this.txtTelefoneAmigo.getText();
             email = this.txtEmail.getText().toLowerCase();
 
             if (nome.length() < 3) {
                 throw new MensagensException("Preencha um nome valido");
             }
 
-            if (!telefone.matches("\\d{11}")) {
+            if (telefone.contains(" ")) {
                 throw new MensagensException("Insira um telefone valido com DDD");
             }
 
@@ -199,7 +201,7 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
             this.objetoamigo.InsertAmigoBD(id, nome, telefone, email);
 
             this.txtNomeAmigo.setText("");
-            this.txtTelefone.setText("");
+            this.txtTelefoneAmigo.setText("");
             this.txtEmail.setText("");
             JOptionPane.showMessageDialog(rootPane, "Amigo cadastrado com sucesso");
             System.out.println(this.objetoamigo.getMinhaLista().toString());
@@ -257,6 +259,6 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNomeAmigo;
-    private javax.swing.JTextField txtTelefone;
+    private javax.swing.JFormattedTextField txtTelefoneAmigo;
     // End of variables declaration//GEN-END:variables
 }

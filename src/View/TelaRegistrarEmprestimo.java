@@ -5,11 +5,16 @@ import DAO.FerramentaDAO;
 import Model.Amigo;
 import Model.Ferramenta;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
 
@@ -33,16 +38,16 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         DataDeDevolução = new javax.swing.JLabel();
         txtfildEmprestimoFerramenta = new javax.swing.JTextField();
-        txtFildDataDevolução = new javax.swing.JTextField();
         btnRegistro = new javax.swing.JButton();
         btnRegisterVoltar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        txtFildDataEmprestimo = new javax.swing.JTextField();
         txtNomeAmigoEmprestimo = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         txtEmailAmigoEmprestimo = new javax.swing.JTextField();
         jComboBox2 = new javax.swing.JComboBox<>();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jFormattedTextField2 = new javax.swing.JFormattedTextField();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -74,13 +79,12 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
             }
         });
 
-        txtFildDataDevolução.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistro.setText("Registrar");
+        btnRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFildDataDevoluçãoActionPerformed(evt);
+                btnRegistroActionPerformed(evt);
             }
         });
-
-        btnRegistro.setText("Registrar");
 
         btnRegisterVoltar.setText("Voltar");
         btnRegisterVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -90,12 +94,6 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         });
 
         jLabel5.setText("Data de Empréstimo:");
-
-        txtFildDataEmprestimo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtFildDataEmprestimoActionPerformed(evt);
-            }
-        });
 
         txtNomeAmigoEmprestimo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -122,6 +120,23 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
                 jComboBox2ActionPerformed(evt);
             }
         });
+
+        try {
+            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jFormattedTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFormattedTextField1ActionPerformed(evt);
+            }
+        });
+
+        try {
+            jFormattedTextField2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout TelaRegistroDeEmprestimoLayout = new javax.swing.GroupLayout(TelaRegistroDeEmprestimo);
         TelaRegistroDeEmprestimo.setLayout(TelaRegistroDeEmprestimoLayout);
@@ -151,18 +166,18 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
-                                        .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(txtFildDataEmprestimo, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                                            .addComponent(txtFildDataDevolução)
-                                            .addComponent(txtfildEmprestimoFerramenta, javax.swing.GroupLayout.Alignment.LEADING))
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
                                         .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(txtNomeAmigoEmprestimo, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
                                             .addComponent(txtEmailAmigoEmprestimo))
                                         .addGap(18, 18, 18)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
+                                        .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(jFormattedTextField2, javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                                            .addComponent(txtfildEmprestimoFerramenta, javax.swing.GroupLayout.Alignment.LEADING))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                         .addContainerGap())))
         );
         TelaRegistroDeEmprestimoLayout.setVerticalGroup(
@@ -187,11 +202,11 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(txtFildDataEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(DataDeDevolução)
-                    .addComponent(txtFildDataDevolução, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(41, 41, 41)
                 .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegisterVoltar)
@@ -218,14 +233,6 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtFildDataEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFildDataEmprestimoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFildDataEmprestimoActionPerformed
-
-    private void txtFildDataDevoluçãoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFildDataDevoluçãoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtFildDataDevoluçãoActionPerformed
 
     private void txtNomeAmigoEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeAmigoEmprestimoActionPerformed
         String searchTerm = txtNomeAmigoEmprestimo.getText();
@@ -271,10 +278,46 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
             if (parts.length == 2) {
                 String nome = parts[0].trim();
                 txtfildEmprestimoFerramenta.setText(nome);
-                
+
             }
         }
     }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
+        try {
+            String nomeAmigo = txtNomeAmigoEmprestimo.getText(),
+                    emailAmigo = txtEmailAmigoEmprestimo.getText(),
+                    nomeFerramenta = txtfildEmprestimoFerramenta.getText(),
+                    dataEmprestimo = jFormattedTextField1.getText(),
+                    dataDevolucao = jFormattedTextField2.getText(),
+                    dataEmprestimoConvertida,
+                    dataDevolucaoConvertida;
+            int idAmigo,
+                    idFerramenta;
+            DateTimeFormatter formatoEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatoSaida = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+            if (!dataEmprestimo.trim().isEmpty() || !dataDevolucao.trim().isEmpty()) {
+                LocalDate dataEmprestimoParaConverter = LocalDate.parse(dataEmprestimo, formatoEntrada);
+                LocalDate dataDevolucaoParaConverter = LocalDate.parse(dataDevolucao, formatoEntrada);
+                if (isValidDate(dataEmprestimoParaConverter) && isValidDate(dataDevolucaoParaConverter)) {
+                    dataEmprestimoConvertida = dataEmprestimoParaConverter.format(formatoSaida);
+                    dataDevolucaoConvertida = dataDevolucaoParaConverter.format(formatoSaida);
+                }
+            } else {
+                throw new MensagensException("Insira uma data valida");
+            }
+        } catch (MensagensException erro) {
+            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
+        } catch (SQLException erro) {
+        }
+
+
+    }//GEN-LAST:event_btnRegistroActionPerformed
+
+    private void jFormattedTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFormattedTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFormattedTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -318,6 +361,8 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
     private javax.swing.JButton btnRegistro;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
+    private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -325,8 +370,6 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtEmailAmigoEmprestimo;
-    private javax.swing.JTextField txtFildDataDevolução;
-    private javax.swing.JTextField txtFildDataEmprestimo;
     private javax.swing.JTextField txtNomeAmigoEmprestimo;
     private javax.swing.JTextField txtfildEmprestimoFerramenta;
     // End of variables declaration//GEN-END:variables
@@ -381,6 +424,7 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         }
         return ferramentaConvertidas;
     }
+
     private void exibirResultadosFerramentas(List<Ferramenta> ferramentaEncontrada) {
         DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
 
@@ -390,6 +434,44 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         }
 
         jComboBox2.setModel(comboBoxModel);
+    }
+
+    private static boolean isValidDate(Date date) {
+        Date dataAtual = new Date();
+
+        if (date.after(dataAtual)) {
+            return false;
+        }
+
+        SimpleDateFormat formatoDia = new SimpleDateFormat("dd");
+        SimpleDateFormat formatoMes = new SimpleDateFormat("MM");
+        SimpleDateFormat formatoAno = new SimpleDateFormat("yyyy");
+
+        int dia = Integer.parseInt(formatoDia.format(date));
+        int mes = Integer.parseInt(formatoMes.format(date));
+        int ano = Integer.parseInt(formatoAno.format(date));
+
+        if (mes > 12 || dia > 31) {
+            return false;
+        }
+
+        if (mes == 4 || mes == 6 || mes == 9 || mes == 11) {
+            if (dia > 30) {
+                return false;
+            }
+        } else if (mes == 2) {
+            if (ano % 4 == 0 && (ano % 100 != 0 || ano % 400 == 0)) {
+                if (dia > 29) {
+                    return false;
+                }
+            } else {
+                if (dia > 28) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
 }

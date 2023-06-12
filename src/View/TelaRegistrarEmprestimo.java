@@ -262,7 +262,7 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JList<Amigo> jList1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtAmigoEmprestimo;

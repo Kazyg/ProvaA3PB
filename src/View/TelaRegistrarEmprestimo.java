@@ -4,17 +4,26 @@
  */
 package View;
 
+import DAO.AmigoDAO;
+import Model.Amigo;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.ListModel;
+
 /**
  *
  * @author guilherme
  */
 public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TelaRegistrarEmprestimo
-     */
+    private final AmigoDAO objetoamigo;
+
     public TelaRegistrarEmprestimo() {
         initComponents();
+        this.objetoamigo = new AmigoDAO();
     }
 
     /**
@@ -32,13 +41,15 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         DataDeDevolução = new javax.swing.JLabel();
-        txtfildEmprestimoAmigo = new javax.swing.JTextField();
         txtfildEmprestimoFerramenta = new javax.swing.JTextField();
         txtFildDataDevolução = new javax.swing.JTextField();
         btnRegistro = new javax.swing.JButton();
         btnRegisterVoltar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         txtFildDataEmprestimo = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        txtAmigoEmprestimo = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -64,12 +75,6 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
 
         DataDeDevolução.setText("Data de devolução:");
 
-        txtfildEmprestimoAmigo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtfildEmprestimoAmigoActionPerformed(evt);
-            }
-        });
-
         txtFildDataDevolução.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtFildDataDevoluçãoActionPerformed(evt);
@@ -88,6 +93,19 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
             }
         });
 
+        jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jList1ValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jList1);
+
+        txtAmigoEmprestimo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAmigoEmprestimoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout TelaRegistroDeEmprestimoLayout = new javax.swing.GroupLayout(TelaRegistroDeEmprestimo);
         TelaRegistroDeEmprestimo.setLayout(TelaRegistroDeEmprestimoLayout);
         TelaRegistroDeEmprestimoLayout.setHorizontalGroup(
@@ -96,38 +114,47 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
-                        .addGap(147, 147, 147)
-                        .addComponent(btnRegisterVoltar))
-                    .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
                         .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)
-                            .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(btnRegistro)
-                                .addComponent(DataDeDevolução)))
-                        .addGap(18, 18, 18)
-                        .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtfildEmprestimoFerramenta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
-                            .addComponent(txtfildEmprestimoAmigo, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFildDataEmprestimo)
-                            .addComponent(txtFildDataDevolução))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
+                                .addGap(147, 147, 147)
+                                .addComponent(btnRegisterVoltar))
+                            .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
+                                .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(btnRegistro)
+                                        .addComponent(DataDeDevolução)))
+                                .addGap(18, 18, 18)
+                                .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtAmigoEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(txtfildEmprestimoFerramenta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                                        .addComponent(txtFildDataEmprestimo)
+                                        .addComponent(txtFildDataDevolução)))))
+                        .addContainerGap(206, Short.MAX_VALUE))
+                    .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(38, 38, 38))))
             .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
                 .addGap(87, 87, 87)
                 .addComponent(jLabel1)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(197, Short.MAX_VALUE))
         );
         TelaRegistroDeEmprestimoLayout.setVerticalGroup(
             TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jLabel1)
-                .addGap(44, 44, 44)
-                .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtfildEmprestimoAmigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(txtAmigoEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10)
                 .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtfildEmprestimoFerramenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -139,11 +166,11 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
                 .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(DataDeDevolução)
                     .addComponent(txtFildDataDevolução, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
+                .addGap(41, 41, 41)
                 .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegisterVoltar)
                     .addComponent(btnRegistro))
-                .addContainerGap(71, Short.MAX_VALUE))
+                .addGap(71, 71, 71))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -166,10 +193,6 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtfildEmprestimoAmigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfildEmprestimoAmigoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtfildEmprestimoAmigoActionPerformed
-
     private void txtFildDataEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFildDataEmprestimoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFildDataEmprestimoActionPerformed
@@ -177,6 +200,21 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
     private void txtFildDataDevoluçãoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFildDataDevoluçãoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFildDataDevoluçãoActionPerformed
+
+    private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
+        if (!evt.getValueIsAdjusting()) {
+            String amigoSelecionado = jList1.getSelectedValue();
+            if (amigoSelecionado != null) {
+                //txtAmigoEmprestimo.setText(amigoSelecionado.getNome());
+            }
+        }
+    }//GEN-LAST:event_jList1ValueChanged
+
+    private void txtAmigoEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAmigoEmprestimoActionPerformed
+        String searchTerm = txtAmigoEmprestimo.getText();
+        List<Amigo> amigosEncontrados = filtrarAmigos(searchTerm);
+        exibirResultados(amigosEncontrados);
+    }//GEN-LAST:event_txtAmigoEmprestimoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -222,10 +260,43 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField txtAmigoEmprestimo;
     private javax.swing.JTextField txtFildDataDevolução;
     private javax.swing.JTextField txtFildDataEmprestimo;
-    private javax.swing.JTextField txtfildEmprestimoAmigo;
     private javax.swing.JTextField txtfildEmprestimoFerramenta;
     // End of variables declaration//GEN-END:variables
+
+    private List<Amigo> filtrarAmigos(String searchTerm) {
+        DefaultListModel<Amigo> amigosFiltrados = new DefaultListModel<>();
+
+        List<Amigo> amigosEncontrados = null;
+        try {
+            amigosEncontrados = objetoamigo.getMinhaLista();
+        } catch (MensagensException ex) {
+            Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        for (Amigo amigo : amigosEncontrados) {
+            if (amigo.getNome().toLowerCase().contains(searchTerm.toLowerCase())) {
+                amigosFiltrados.addElement(amigo);
+            }
+        }
+        amigosEncontrados = (List<Amigo>) amigosFiltrados;
+        return amigosEncontrados;
+    }
+
+    private void exibirResultados(List<Amigo> amigosEncontrados) {
+        DefaultListModel<Amigo> listModel = new DefaultListModel<>();
+
+        for (Amigo amigo : amigosEncontrados) {
+            listModel.addElement(amigo);
+        }
+
+        jList1.setModel(listModel)
+    }
 }

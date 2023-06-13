@@ -60,8 +60,4 @@ public class Ferramenta {
         this.id = id;
     }
 
-    public ArrayList<Ferramenta> getMinhaLista() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
 }

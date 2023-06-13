@@ -1,7 +1,11 @@
 package View;
 
+import DAO.FerramentaDAO;
 import Model.Ferramenta; 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 public class TelaRelatorioFerramentas extends javax.swing.JFrame {
@@ -133,7 +137,13 @@ public class TelaRelatorioFerramentas extends javax.swing.JFrame {
 DefaultTableModel modelo = (DefaultTableModel) this.TableRelatorioFerramentas.getModel();
 modelo.setNumRows(0);
 ArrayList<Ferramenta> minhalista = new ArrayList<>();
-minhalista = objferramenta.getMinhaLista();
+        try {
+            minhalista = objferramenta.getMinhaLista();
+        } catch (MensagensException ex) {
+            Logger.getLogger(TelaRelatorioFerramentas.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaRelatorioFerramentas.class.getName()).log(Level.SEVERE, null, ex);
+        }
 for (Ferramenta f : minhalista) {
 modelo.addRow(new Object[]{
 f.getNome(),

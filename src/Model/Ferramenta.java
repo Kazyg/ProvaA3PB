@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class Ferramenta {
 
     private int id;
@@ -56,6 +58,10 @@ public class Ferramenta {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public ArrayList<Ferramenta> getMinhaLista() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

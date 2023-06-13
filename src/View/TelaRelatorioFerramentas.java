@@ -6,11 +6,11 @@ import javax.swing.table.DefaultTableModel;
 
 public class TelaRelatorioFerramentas extends javax.swing.JFrame {
 
-    private Ferramenta objferramenta;
+    private FerramentaDAO objferramenta;
     
     public TelaRelatorioFerramentas() {
         initComponents();
-        this.objferramenta = new Ferramenta();
+        this.objferramenta = new FerramentaDAO();
         this.carregaRelatorio();
     }
 

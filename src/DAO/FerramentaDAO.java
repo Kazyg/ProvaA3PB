@@ -93,7 +93,7 @@ public class FerramentaDAO {
         res.next();
 
         objeto.setId(res.getInt("idferramenta"));
-        objeto.setNome(res.getString("nome"));
+        objeto.setNome(res.getString("nomeFerramenta"));
         objeto.setMarca(res.getString("marca"));
         objeto.setCusto(res.getDouble("custo"));
 

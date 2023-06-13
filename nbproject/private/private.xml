@@ -4,16 +4,20 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/guilherme/Documents/GitHub/ProvaA3PB/src/View/TelaRegistrarEmprestimo.java</file>
+            <file>file:/C:/Users/guilherme/Documents/GitHub/ProvaA3PB/src/DAO/HistoricoDAO.java</file>
             <file>file:/C:/Users/guilherme/Documents/GitHub/ProvaA3PB/src/Model/Ferramenta.java</file>
+            <file>file:/C:/Users/guilherme/Documents/GitHub/ProvaA3PB/src/DAO/AmigoDAO.java</file>
+            <file>file:/C:/Users/guilherme/Documents/GitHub/ProvaA3PB/src/View/TelaCadastroFerramenta.java</file>
+            <file>file:/C:/Users/guilherme/Documents/GitHub/ProvaA3PB/src/provaa3/ProvaA3.java</file>
+            <file>file:/C:/Users/guilherme/Documents/GitHub/ProvaA3PB/src/Model/Emprestimo.java</file>
+            <file>file:/C:/Users/guilherme/Documents/GitHub/ProvaA3PB/src/Model/Historico.java</file>
+            <file>file:/C:/Users/guilherme/Documents/GitHub/ProvaA3PB/src/View/MensagensException.java</file>
+            <file>file:/C:/Users/guilherme/Documents/GitHub/ProvaA3PB/src/DAO/EmprestimoDAO.java</file>
             <file>file:/C:/Users/guilherme/Documents/GitHub/ProvaA3PB/src/View/TelaCadastroAmigo.java</file>
             <file>file:/C:/Users/guilherme/Documents/GitHub/ProvaA3PB/src/DAO/FerramentaDAO.java</file>
             <file>file:/C:/Users/guilherme/Documents/GitHub/ProvaA3PB/src/View/TelaRelatorioFerramentas.java</file>
-            <file>file:/C:/Users/guilherme/Documents/GitHub/ProvaA3PB/src/DAO/AmigoDAO.java</file>
-            <file>file:/C:/Users/guilherme/Documents/GitHub/ProvaA3PB/src/View/TelaCadastroFerramenta.java</file>
             <file>file:/C:/Users/guilherme/Documents/GitHub/ProvaA3PB/src/Model/Amigo.java</file>
             <file>file:/C:/Users/guilherme/Documents/GitHub/ProvaA3PB/src/View/TelaAgenda.java</file>
-            <file>file:/C:/Users/guilherme/Documents/GitHub/ProvaA3PB/src/provaa3/ProvaA3.java</file>
-            <file>file:/C:/Users/guilherme/Documents/GitHub/ProvaA3PB/src/Model/Emprestimo.java</file>
             <file>file:/C:/Users/guilherme/Documents/GitHub/ProvaA3PB/src/View/TelaInicial.java</file>
         </group>
     </open-files>

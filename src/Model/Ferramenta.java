@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.ArrayList;
-
 public class Ferramenta {
 
     private int id;

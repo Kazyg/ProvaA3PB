@@ -86,7 +86,7 @@ public class HistoricoDAO {
         stmt.setInt(2, objeto.getAmigo().getId());
         stmt.setInt(3, objeto.getFerramenta().getId());
         stmt.setInt(4, objeto.getEmprestimo().getId());
-        stmt.setDate(4, (java.sql.Date) objeto.getDataEfetivaDevolucao());
+        stmt.setDate(5, (java.sql.Date) objeto.getDataEfetivaDevolucao());
 
         stmt.execute();
         stmt.close();

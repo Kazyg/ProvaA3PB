@@ -1,20 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package View;
 
-/**
- *
- * @author guilherme
- */
+import Model.Ferramenta; 
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 public class TelaRelatorioFerramentas extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TelaRelatorioFerramentas
-     */
+    private FerramentaDAO objferramenta;
+    
     public TelaRelatorioFerramentas() {
         initComponents();
+        this.objferramenta = new FerramentaDAO();
+        this.carregaRelatorio();
     }
 
     /**
@@ -64,7 +61,15 @@ public class TelaRelatorioFerramentas extends javax.swing.JFrame {
         ));
         TableRelatorioFerramentas.setName("Relatório de empréstimos ativos"); // NOI18N
         TableRelatorioFerramentas.setRowHeight(35);
-        TableRelatorioFerramentas.setShowGrid(true);
+        TableRelatorioFerramentas.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                TableRelatorioFerramentasAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
         jScrollPane1.setViewportView(TableRelatorioFerramentas);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -88,23 +93,21 @@ public class TelaRelatorioFerramentas extends javax.swing.JFrame {
             TelaRelatoroDeFerramentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TelaRelatoroDeFerramentasLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(TelaRelatoroDeFerramentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(TelaRelatoroDeFerramentasLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(TelaRelatoroDeFerramentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(TelaRelatoroDeFerramentasLayout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addComponent(CustodeAquisição, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(194, Short.MAX_VALUE))))
+                        .addGap(27, 27, 27)
+                        .addComponent(CustodeAquisição, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(194, Short.MAX_VALUE))
+            .addComponent(jScrollPane1)
         );
         TelaRelatoroDeFerramentasLayout.setVerticalGroup(
             TelaRelatoroDeFerramentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TelaRelatoroDeFerramentasLayout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(TelaRelatoroDeFerramentasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,6 +129,22 @@ public class TelaRelatorioFerramentas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    public void carregaRelatorio() {
+DefaultTableModel modelo = (DefaultTableModel) this.TableRelatorioFerramentas.getModel();
+modelo.setNumRows(0);
+ArrayList<Ferramenta> minhalista = new ArrayList<>();
+minhalista = objferramenta.getMinhaLista();
+for (Ferramenta f : minhalista) {
+modelo.addRow(new Object[]{
+f.getNome(),
+f.getMarca(),
+f.getCusto(),
+});
+}
+}
+    private void TableRelatorioFerramentasAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_TableRelatorioFerramentasAncestorAdded
+    // TODO add your handling code here:
+    }//GEN-LAST:event_TableRelatorioFerramentasAncestorAdded
 
     /**
      * @param args the command line arguments
@@ -170,4 +189,7 @@ public class TelaRelatorioFerramentas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+ 
+ 
 }

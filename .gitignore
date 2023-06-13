@@ -5,5 +5,4 @@ nbproject/project.properties
 nbproject/project.xml
 nbproject/private/private.properties
 src/DAO
-src/DAO/AmigoDAO.java
-src/DAO/FerramentaDAO.java
+/nbproject/private/

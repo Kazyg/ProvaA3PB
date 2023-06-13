@@ -46,8 +46,9 @@ public class TelaInicial extends javax.swing.JFrame {
         menuItemAtivos = new javax.swing.JMenuItem();
         menuItemFerramentas = new javax.swing.JMenuItem();
         menuItemTodosRelatorios = new javax.swing.JMenuItem();
-        menuRegistro = new javax.swing.JMenu();
+        menuDevolucao = new javax.swing.JMenu();
         menuItemEmprestimo = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         menuAgenda = new javax.swing.JMenu();
         menuItemAgenda = new javax.swing.JMenuItem();
         menuItemSair = new javax.swing.JMenu();
@@ -141,7 +142,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
         jMenuBar1.add(MenuRelatorio);
 
-        menuRegistro.setText("Registros");
+        menuDevolucao.setText("Registros");
 
         menuItemEmprestimo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ICONS/icons 1/application_add.png"))); // NOI18N
         menuItemEmprestimo.setText("Registro de Emprestimos");
@@ -150,9 +151,18 @@ public class TelaInicial extends javax.swing.JFrame {
                 menuItemEmprestimoActionPerformed(evt);
             }
         });
-        menuRegistro.add(menuItemEmprestimo);
+        menuDevolucao.add(menuItemEmprestimo);
 
-        jMenuBar1.add(menuRegistro);
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ICONS/icons 1/asterisk_yellow.png"))); // NOI18N
+        jMenuItem4.setText("Devolução");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        menuDevolucao.add(jMenuItem4);
+
+        jMenuBar1.add(menuDevolucao);
 
         menuAgenda.setText("Agenda");
 
@@ -228,6 +238,10 @@ public class TelaInicial extends javax.swing.JFrame {
         new TelaAgenda().setVisible(true);
     }//GEN-LAST:event_menuItemAgendaActionPerformed
 
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -280,8 +294,10 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenu menuAgenda;
+    private javax.swing.JMenu menuDevolucao;
     private javax.swing.JMenuItem menuItemAgenda;
     private javax.swing.JMenuItem menuItemAmigos;
     private javax.swing.JMenuItem menuItemAtivos;
@@ -290,6 +306,5 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemFerramentas;
     private javax.swing.JMenu menuItemSair;
     private javax.swing.JMenuItem menuItemTodosRelatorios;
-    private javax.swing.JMenu menuRegistro;
     // End of variables declaration//GEN-END:variables
 }

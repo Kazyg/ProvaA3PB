@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -27,6 +28,9 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
     private final EmprestimoDAO objetoemprestimo;
     private final HistoricoDAO objetohistorico;
     private String marcaFerramenta;
+    private ArrayList<Ferramenta> listaFerramenta;
+    private ArrayList<String> listaFerramentasJList;
+    private DefaultListModel<String> model;
 
     public TelaRegistrarEmprestimo() {
         initComponents();
@@ -34,6 +38,9 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         this.objetoferramenta = new FerramentaDAO();
         this.objetoemprestimo = new EmprestimoDAO();
         this.objetohistorico = new HistoricoDAO();
+        this.listaFerramenta = new ArrayList<>();
+        this.listaFerramentasJList = new ArrayList<>();
+        this.model = new DefaultListModel<>();
         limparCampos();
         DocumentListener documentListener = new DocumentListener() {
             @Override
@@ -56,11 +63,22 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
                 String emailAmigo = txtEmailAmigoEmprestimo.getText();
                 String searchTerm = txtfildEmprestimoFerramenta.getText();
 
-                List<Amigo> amigosEncontrados = filtrarAmigos(nomeAmigo, emailAmigo);
-                exibirResultadosAmigos(amigosEncontrados);
+                List<Amigo> amigosEncontrados;
+                try {
+                    amigosEncontrados = filtrarAmigos(nomeAmigo, emailAmigo);
+                    exibirResultadosAmigos(amigosEncontrados);
+                } catch (MensagensException ex) {
+                    Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
-                List<Ferramenta> ferramentasEncontradas = filtrarFerramenta(searchTerm);
-                exibirResultadosFerramentas(ferramentasEncontradas);
+                List<Ferramenta> ferramentasEncontradas;
+                try {
+                    ferramentasEncontradas = filtrarFerramenta(searchTerm, "");
+                    exibirResultadosFerramentas(ferramentasEncontradas);
+                } catch (MensagensException ex) {
+                    Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
             }
         };
         txtNomeAmigoEmprestimo.getDocument().addDocumentListener(documentListener);
@@ -92,6 +110,7 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
         jLabel6 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -186,6 +205,13 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
 
         jLabel6.setText("Lista de Ferramentas para serem emprestadas");
 
+        jButton1.setText("Limpar Lista");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout TelaRegistroDeEmprestimoLayout = new javax.swing.GroupLayout(TelaRegistroDeEmprestimo);
         TelaRegistroDeEmprestimo.setLayout(TelaRegistroDeEmprestimoLayout);
         TelaRegistroDeEmprestimoLayout.setHorizontalGroup(
@@ -224,13 +250,17 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
                             .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TelaRegistroDeEmprestimoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(87, 87, 87))
         );
         TelaRegistroDeEmprestimoLayout.setVerticalGroup(
             TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtNomeAmigoEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -264,7 +294,9 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
                     .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
                         .addGap(69, 69, 69)
                         .addComponent(jLabel6)))
-                .addGap(17, 17, 17))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -321,20 +353,21 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         Object selectedValue = jComboBox2.getSelectedItem();
         if (selectedValue != null) {
             String selectedString = selectedValue.toString();
-            String[] parts = selectedString.split("-");
-            if (parts.length == 2) {
-                String nome = parts[0].trim();
-                marcaFerramenta = parts[1].trim();
-                txtfildEmprestimoFerramenta.setText(nome);
+            model.clear();
+            listaFerramentasJList.add(selectedString);
+            for (String item : listaFerramentasJList) {
+                model.addElement(item);
             }
+            jList1.setModel(model);
         }
+        txtfildEmprestimoFerramenta.setText("");
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
         try {
             String nomeAmigo = txtNomeAmigoEmprestimo.getText(),
                     emailAmigo = txtEmailAmigoEmprestimo.getText(),
-                    nomeFerramenta = txtfildEmprestimoFerramenta.getText(),
+                    nomeFerramenta,
                     dataEmprestimo = jFormattedTextField1.getText(),
                     dataDevolucao = jFormattedTextField2.getText();
             Date dataEmprestimoConvertida = null,
@@ -345,6 +378,17 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
                     idEmprestimoCadastrado,
                     idHistorico = 0;
             DateTimeFormatter formatoEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+            for (String item : listaFerramentasJList) {
+                String[] parts = item.split("-");
+                if (parts.length == 2) {
+                    nomeFerramenta = parts[0].trim();
+                    marcaFerramenta = parts[1].trim();
+                    idFerramenta = filtrarFerramenta(nomeFerramenta, marcaFerramenta).get(0).getId();
+                    Ferramenta ferramentaDaLista = this.objetoferramenta.carregaFerramenta(idFerramenta);
+                    listaFerramenta.add(ferramentaDaLista);
+                }
+            }
 
             if (!dataEmprestimo.trim().isEmpty() || !dataDevolucao.trim().isEmpty()) {
                 LocalDate dataEmprestimoParaConverter = LocalDate.parse(dataEmprestimo, formatoEntrada);
@@ -358,17 +402,17 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
             }
             idEmprestimoCadastrado = this.objetoemprestimo.InsertEmprestimoBD(idEmprestimo, dataEmprestimoConvertida, dataDevolucaoConvertida);
 
-            idAmigo = encontrarAmigo(nomeAmigo, emailAmigo).getId();
+            idAmigo = filtrarAmigos(nomeAmigo, emailAmigo).get(0).getId();
             if (marcaFerramenta == null) {
                 throw new MensagensException("Selecione uma ferramenta na lista");
             }
-            idFerramenta = encontrarFerramenta(nomeFerramenta, marcaFerramenta).getId();
 
             Amigo amigoHistorico = this.objetoamigo.carregaAmigo(idAmigo);
-            Ferramenta ferramentaHistorico = this.objetoferramenta.carregaFerramenta(idFerramenta);
             Emprestimo emprestimoHistorico = this.objetoemprestimo.carregaEmprestimo(idEmprestimoCadastrado);
 
-            this.objetohistorico.InsertHistoricoBD(idHistorico, amigoHistorico, ferramentaHistorico, emprestimoHistorico, null);
+            for (Ferramenta ferramentaHistorico : listaFerramenta) {
+                this.objetohistorico.InsertHistoricoBD(idHistorico, amigoHistorico, ferramentaHistorico, emprestimoHistorico, null);
+            }
             JOptionPane.showMessageDialog(rootPane, "Emprestimo feito com sucesso");
             limparCampos();
 
@@ -385,9 +429,10 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextField1ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        limparJlist();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -425,6 +470,7 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
     private javax.swing.JPanel TelaRegistroDeEmprestimo;
     private javax.swing.JButton btnRegisterVoltar;
     private javax.swing.JButton btnRegistro;
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JFormattedTextField jFormattedTextField1;
@@ -443,7 +489,7 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
     private javax.swing.JTextField txtfildEmprestimoFerramenta;
     // End of variables declaration//GEN-END:variables
 
-    private List<Amigo> filtrarAmigos(String nomeAmigo, String emailAmigo) {
+    private List<Amigo> filtrarAmigos(String nomeAmigo, String emailAmigo) throws MensagensException {
         List<Amigo> amigosConvertidos = new ArrayList<>();
 
         List<Amigo> amigosEncontrados = null;
@@ -470,9 +516,13 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
                 if (amigo.getNome().toLowerCase().contains(nomeAmigo.toLowerCase()) && amigo.getEmail().toLowerCase().contains(emailAmigo.toLowerCase())) {
                     amigosConvertidos.add(amigo);
                 }
+                if (amigosConvertidos == null) {
+                    limparCampos();
+                    throw new MensagensException("Selecione um amigo existente");
+                }
             }
-            if(emailAmigo.isEmpty() && nomeAmigo.isEmpty()){
-                if (amigo.getNome().toLowerCase().contains(nomeAmigo.toLowerCase()) || amigo.getEmail().toLowerCase().contains(emailAmigo.toLowerCase())){
+            if (emailAmigo.isEmpty() && nomeAmigo.isEmpty()) {
+                if (amigo.getNome().toLowerCase().contains(nomeAmigo.toLowerCase()) || amigo.getEmail().toLowerCase().contains(emailAmigo.toLowerCase())) {
                     amigosConvertidos.add(amigo);
                 }
             }
@@ -491,21 +541,33 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         jComboBox1.setModel(comboBoxModel);
     }
 
-    private List<Ferramenta> filtrarFerramenta(String searchTerm) {
+    private List<Ferramenta> filtrarFerramenta(String termo1, String termo2) throws MensagensException {
         List<Ferramenta> ferramentaConvertidas = new ArrayList<>();
 
-        List<Ferramenta> ferramentaEncontrados = null;
+        List<Ferramenta> ferramentaEncontradas = null;
         try {
-            ferramentaEncontrados = objetoferramenta.getMinhaLista();
+            ferramentaEncontradas = objetoferramenta.getMinhaLista();
         } catch (MensagensException ex) {
             Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        for (Ferramenta ferramenta : ferramentaEncontrados) {
-            if (ferramenta.getNome().toLowerCase().contains(searchTerm.toLowerCase()) || ferramenta.getMarca().toLowerCase().contains(searchTerm.toLowerCase())) {
-                ferramentaConvertidas.add(ferramenta);
+        if (termo2.isEmpty()) {
+            for (Ferramenta ferramenta : ferramentaEncontradas) {
+                if (ferramenta.getNome().toLowerCase().contains(termo1.toLowerCase()) || ferramenta.getMarca().toLowerCase().contains(termo1.toLowerCase())) {
+                    ferramentaConvertidas.add(ferramenta);
+                }
+            }
+        }
+        if (!termo1.isEmpty() && !termo2.isEmpty()) {
+            for (Ferramenta ferramenta : ferramentaEncontradas) {
+                if (ferramenta.getNome().toLowerCase().equals(termo1.toLowerCase()) && ferramenta.getMarca().toLowerCase().equals(termo2.toLowerCase())) {
+                    ferramentaConvertidas.add(ferramenta);
+                }
+            }
+            if (ferramentaConvertidas.get(0).getNome() == null || ferramentaConvertidas.get(0).getNome().isEmpty()) {
+                limparCampos();
+                throw new MensagensException("Selecione uma ferramenta existente");
             }
         }
         return ferramentaConvertidas;
@@ -556,65 +618,34 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         return true;
     }
 
-    private Amigo encontrarAmigo(String nomeAmigo, String emailAmigo) throws MensagensException {
-        Amigo amigoConvertido = new Amigo();
-
-        List<Amigo> amigosEncontrados = null;
-        try {
-            amigosEncontrados = objetoamigo.getMinhaLista();
-        } catch (MensagensException erro) {
-            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-        } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-        }
-
-        for (Amigo amigo : amigosEncontrados) {
-            if (amigo.getNome().toLowerCase().equals(nomeAmigo.toLowerCase()) && amigo.getEmail().toLowerCase().equals(emailAmigo.toLowerCase())) {
-                amigoConvertido = amigo;
-            }
-        }
-        if (amigoConvertido.getNome() == null || amigoConvertido.getNome().isEmpty()) {
-            limparCampos();
-            throw new MensagensException("Selecione um amigo existente");
-        }
-
-        return amigoConvertido;
-    }
-
-    private Ferramenta encontrarFerramenta(String nomeFerramenta, String marcaFerramenta) throws MensagensException {
-        Ferramenta ferramentaConvertida = new Ferramenta();
-
-        List<Ferramenta> ferramentaEncontrada = null;
-        try {
-            ferramentaEncontrada = objetoferramenta.getMinhaLista();
-        } catch (MensagensException erro) {
-            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-        } catch (SQLException erro) {
-            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-        }
-
-        for (Ferramenta ferramenta : ferramentaEncontrada) {
-            if (ferramenta.getNome().toLowerCase().equals(nomeFerramenta.toLowerCase()) && ferramenta.getMarca().toLowerCase().equals(marcaFerramenta.toLowerCase())) {
-                ferramentaConvertida = ferramenta;
-            }
-        }
-        if (ferramentaConvertida.getNome() == null || ferramentaConvertida.getNome().isEmpty()) {
-            limparCampos();
-            throw new MensagensException("Selecione uma ferramenta existente");
-        }
-        return ferramentaConvertida;
-    }
-
     private void limparCampos() {
         this.txtNomeAmigoEmprestimo.setText("");
         this.txtEmailAmigoEmprestimo.setText("");
         this.txtfildEmprestimoFerramenta.setText("");
         this.jFormattedTextField1.setText("");
         this.jFormattedTextField2.setText("");
-        List<Ferramenta> ferramentaEncontrada = filtrarFerramenta("");
+        limparJlist();
+        List<Ferramenta> ferramentaEncontrada = null;
+        try {
+            ferramentaEncontrada = filtrarFerramenta("", "");
+        } catch (MensagensException ex) {
+            Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
+        }
         exibirResultadosFerramentas(ferramentaEncontrada);
-        List<Amigo> amigosEncontrados = filtrarAmigos("", "");
+        List<Amigo> amigosEncontrados = null;
+        try {
+            amigosEncontrados = filtrarAmigos("", "");
+        } catch (MensagensException ex) {
+            Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
+        }
         exibirResultadosAmigos(amigosEncontrados);
+    }
+
+    private void limparJlist() {
+        this.listaFerramentasJList.clear();
+        this.listaFerramenta.clear();
+        model.clear();
+        this.jList1.setModel(model);
     }
 
 }

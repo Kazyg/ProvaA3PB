@@ -7,16 +7,20 @@ public class Emprestimo {
     private int Id;
     private Date DataPrevistaDevolucao;
     private Date DataRetirada;
-    private Date DataEfetivaDevolucao;
 
     public Emprestimo() {
     }
 
-    public Emprestimo(Date DataPrevistaDevolucao, Date DataRetirada, Date DataEfetivaDevolucao) {
+    public Emprestimo(int Id, Date DataPrevistaDevolucao, Date DataRetirada) {
+        this.Id = Id;
+        this.DataPrevistaDevolucao = DataPrevistaDevolucao;
+        this.DataRetirada = DataRetirada;
+    }
+    
+    public Emprestimo(Date DataPrevistaDevolucao, Date DataRetirada) {
         this.Id = 0;
         this.DataPrevistaDevolucao = DataPrevistaDevolucao;
         this.DataRetirada = DataRetirada;
-        this.DataEfetivaDevolucao = DataEfetivaDevolucao;
     }
 
     public Date getDataPrevistaDevolucao() {
@@ -35,12 +39,12 @@ public class Emprestimo {
         this.DataRetirada = DataRetirada;
     }
 
-    public Date getDataEfetivaDevolucao() {
-        return DataEfetivaDevolucao;
+    public int getId() {
+        return Id;
     }
 
-    public void setDataDevolucao(Date DataDevolucao) {
-        this.DataEfetivaDevolucao = DataDevolucao;
+    public void setId(int Id) {
+        this.Id = Id;
     }
-
+    
 }

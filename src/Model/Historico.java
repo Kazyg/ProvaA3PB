@@ -1,23 +1,34 @@
 package Model;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.Date;
 
 public class Historico {
+
     private int id;
     private Amigo amigo;
-    private List<Ferramenta> listaFerramentas;
+    private Ferramenta ferramenta;
     private Emprestimo emprestimo;
+    private Date DataEfetivaDevolucao;
 
-    public Historico(Amigo amigo, List<Ferramenta> listaFerramentas, Emprestimo emprestimo) {
+    public Historico() {
+    }
+
+    public Historico(int id, Amigo amigo, Ferramenta ferramenta, Emprestimo emprestimo, Date DataEfetivaDevolucao) {
+        this.id = id;
+        this.amigo = amigo;
+        this.ferramenta = ferramenta;
+        this.emprestimo = emprestimo;
+        this.DataEfetivaDevolucao = DataEfetivaDevolucao;
+    }
+
+    public Historico(Amigo amigo, Ferramenta ferramenta, Emprestimo emprestimo, Date DataEfetivaDevolucao) {
         this.id = 0;
         this.amigo = amigo;
-        this.listaFerramentas = new ArrayList<>();
+        this.ferramenta = ferramenta;
         this.emprestimo = emprestimo;
+        this.DataEfetivaDevolucao = DataEfetivaDevolucao;
     }
-    
-    
+
     public Amigo getAmigo() {
         return amigo;
     }
@@ -26,12 +37,20 @@ public class Historico {
         this.amigo = amigo;
     }
 
-    public List<Ferramenta> getListaFerramentas() {
-        return listaFerramentas;
+    public int getId() {
+        return id;
     }
 
-    public void setListaFerramentas(List<Ferramenta> listaFerramentas) {
-        this.listaFerramentas = listaFerramentas;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Ferramenta getFerramenta() {
+        return ferramenta;
+    }
+
+    public void setFerramenta(Ferramenta ferramenta) {
+        this.ferramenta = ferramenta;
     }
 
     public Emprestimo getEmprestimo() {
@@ -40,6 +59,14 @@ public class Historico {
 
     public void setEmprestimo(Emprestimo emprestimo) {
         this.emprestimo = emprestimo;
+    }
+
+    public Date getDataEfetivaDevolucao() {
+        return DataEfetivaDevolucao;
+    }
+
+    public void setDataEfetivaDevolucao(Date DataEfetivaDevolucao) {
+        this.DataEfetivaDevolucao = DataEfetivaDevolucao;
     }
     
 }

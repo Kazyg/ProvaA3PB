@@ -30,7 +30,7 @@ public class EmprestimoDAO {
                     + ":3306/" + database
                     + "?useTimezone=true&serverTimezone=UTC";
             String user = "root";
-            String password = "admin";
+            String password = "suaSenha";
 
             conn = DriverManager.getConnection(url,
                     user, password);
@@ -65,21 +65,26 @@ public class EmprestimoDAO {
 
     }
 
-    public boolean InsertEmprestimoBD(int id, Date dataRetirada, Date dataPrevistaDevolucao) throws MensagensException, SQLException {
+    public int InsertEmprestimoBD(int id, Date dataRetirada, Date dataPrevistaDevolucao) throws MensagensException, SQLException {
         Emprestimo objeto = new Emprestimo(id, dataRetirada, dataPrevistaDevolucao);
         String sql = "INSERT INTO "
-                + "emprestimo (idemprestimo, dataEmprestimo, dataEntregaPrevista)"
+                + "tb_emprestimo(idemprestimo, dataEmprestimo, dataEntregaPrevista) "
                 + "VALUES(?,?,?)";
 
-        PreparedStatement stmt = this.getConnection().prepareStatement(sql);
+        PreparedStatement stmt = this.getConnection().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 
         stmt.setInt(1, objeto.getId());
         stmt.setDate(2, (java.sql.Date) objeto.getDataRetirada());
         stmt.setDate(3, (java.sql.Date) objeto.getDataPrevistaDevolucao());
 
         stmt.execute();
+        ResultSet rs = stmt.getGeneratedKeys();
+        int idGerado = 0;
+        if (rs.next()) {
+            idGerado = rs.getInt(1);
+        }
         stmt.close();
-        return true;
+        return idGerado;
 
     }
 

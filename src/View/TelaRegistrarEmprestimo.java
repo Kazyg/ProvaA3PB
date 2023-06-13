@@ -1,11 +1,13 @@
 package View;
 
 import DAO.AmigoDAO;
+import DAO.EmprestimoDAO;
 import DAO.FerramentaDAO;
+import DAO.HistoricoDAO;
 import Model.Amigo;
+import Model.Emprestimo;
 import Model.Ferramenta;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -15,16 +17,55 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
 
     private final AmigoDAO objetoamigo;
     private final FerramentaDAO objetoferramenta;
+    private final EmprestimoDAO objetoemprestimo;
+    private final HistoricoDAO objetohistorico;
+    private String marcaFerramenta;
 
     public TelaRegistrarEmprestimo() {
         initComponents();
         this.objetoamigo = new AmigoDAO();
         this.objetoferramenta = new FerramentaDAO();
+        this.objetoemprestimo = new EmprestimoDAO();
+        this.objetohistorico = new HistoricoDAO();
+        limparCampos();
+        DocumentListener documentListener = new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                atualizarResultadoPesquisa();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                atualizarResultadoPesquisa();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                atualizarResultadoPesquisa();
+            }
+
+            private void atualizarResultadoPesquisa() {
+                String nomeAmigo = txtNomeAmigoEmprestimo.getText();
+                String emailAmigo = txtEmailAmigoEmprestimo.getText();
+                String searchTerm = txtfildEmprestimoFerramenta.getText();
+
+                List<Amigo> amigosEncontrados = filtrarAmigos(nomeAmigo, emailAmigo);
+                exibirResultadosAmigos(amigosEncontrados);
+
+                List<Ferramenta> ferramentasEncontradas = filtrarFerramenta(searchTerm);
+                exibirResultadosFerramentas(ferramentasEncontradas);
+            }
+        };
+        txtNomeAmigoEmprestimo.getDocument().addDocumentListener(documentListener);
+        txtEmailAmigoEmprestimo.getDocument().addDocumentListener(documentListener);
+        txtfildEmprestimoFerramenta.getDocument().addDocumentListener(documentListener);
     }
 
     @SuppressWarnings("unchecked")
@@ -48,6 +89,8 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         jComboBox2 = new javax.swing.JComboBox<>();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
         jFormattedTextField2 = new javax.swing.JFormattedTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -138,6 +181,8 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
+        jScrollPane1.setViewportView(jList1);
+
         javax.swing.GroupLayout TelaRegistroDeEmprestimoLayout = new javax.swing.GroupLayout(TelaRegistroDeEmprestimo);
         TelaRegistroDeEmprestimo.setLayout(TelaRegistroDeEmprestimoLayout);
         TelaRegistroDeEmprestimoLayout.setHorizontalGroup(
@@ -146,46 +191,46 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
-                        .addGap(147, 147, 147)
-                        .addComponent(btnRegisterVoltar)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(75, 75, 75)
+                        .addComponent(jLabel1))
+                    .addComponent(jLabel2)
                     .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
                         .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
-                                .addGap(75, 75, 75)
-                                .addComponent(jLabel1))
-                            .addComponent(jLabel2)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(btnRegistro)
+                                .addComponent(DataDeDevolução))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
                                 .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(btnRegistro)
-                                        .addComponent(DataDeDevolução))
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtNomeAmigoEmprestimo, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                                    .addComponent(txtEmailAmigoEmprestimo))
+                                .addGap(18, 18, 18)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
+                                .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jFormattedTextField2, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                                        .addComponent(txtfildEmprestimoFerramenta, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
+                                        .addGap(19, 19, 19)
+                                        .addComponent(btnRegisterVoltar)))
                                 .addGap(18, 18, 18)
                                 .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
-                                        .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtNomeAmigoEmprestimo, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                                            .addComponent(txtEmailAmigoEmprestimo))
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
-                                        .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(jFormattedTextField2, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jFormattedTextField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
-                                            .addComponent(txtfildEmprestimoFerramenta, javax.swing.GroupLayout.Alignment.LEADING))
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                        .addContainerGap())))
+                                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE))))))
+                .addContainerGap())
         );
         TelaRegistroDeEmprestimoLayout.setVerticalGroup(
             TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtNomeAmigoEmprestimo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -204,14 +249,17 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(DataDeDevolução)
-                    .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
-                .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRegisterVoltar)
-                    .addComponent(btnRegistro))
-                .addGap(71, 71, 71))
+                .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(TelaRegistroDeEmprestimoLayout.createSequentialGroup()
+                        .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(DataDeDevolução)
+                            .addComponent(jFormattedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(41, 41, 41)
+                        .addGroup(TelaRegistroDeEmprestimoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnRegisterVoltar)
+                            .addComponent(btnRegistro)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -235,9 +283,7 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtNomeAmigoEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeAmigoEmprestimoActionPerformed
-        String searchTerm = txtNomeAmigoEmprestimo.getText();
-        List<Amigo> amigosEncontrados = filtrarAmigos(searchTerm);
-        exibirResultadosAmigos(amigosEncontrados);
+
     }//GEN-LAST:event_txtNomeAmigoEmprestimoActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -255,9 +301,7 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void txtEmailAmigoEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailAmigoEmprestimoActionPerformed
-        String searchTerm = txtEmailAmigoEmprestimo.getText();
-        List<Amigo> amigosEncontrados = filtrarAmigos(searchTerm);
-        exibirResultadosAmigos(amigosEncontrados);
+
     }//GEN-LAST:event_txtEmailAmigoEmprestimoActionPerformed
 
     private void btnRegisterVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterVoltarActionPerformed
@@ -265,9 +309,7 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRegisterVoltarActionPerformed
 
     private void txtfildEmprestimoFerramentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfildEmprestimoFerramentaActionPerformed
-        String searchTerm = txtfildEmprestimoFerramenta.getText();
-        List<Ferramenta> ferramentaEncontrada = filtrarFerramenta(searchTerm);
-        exibirResultadosFerramentas(ferramentaEncontrada);
+
     }//GEN-LAST:event_txtfildEmprestimoFerramentaActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
@@ -277,8 +319,8 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
             String[] parts = selectedString.split("-");
             if (parts.length == 2) {
                 String nome = parts[0].trim();
+                marcaFerramenta = parts[1].trim();
                 txtfildEmprestimoFerramenta.setText(nome);
-
             }
         }
     }//GEN-LAST:event_jComboBox2ActionPerformed
@@ -289,27 +331,46 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
                     emailAmigo = txtEmailAmigoEmprestimo.getText(),
                     nomeFerramenta = txtfildEmprestimoFerramenta.getText(),
                     dataEmprestimo = jFormattedTextField1.getText(),
-                    dataDevolucao = jFormattedTextField2.getText(),
-                    dataEmprestimoConvertida,
-                    dataDevolucaoConvertida;
-            int idAmigo,
+                    dataDevolucao = jFormattedTextField2.getText();
+            Date dataEmprestimoConvertida = null,
+                    dataDevolucaoConvertida = null;
+            Integer idAmigo,
                     idFerramenta;
+            int idEmprestimo = 0,
+                    idEmprestimoCadastrado,
+                    idHistorico = 0;
             DateTimeFormatter formatoEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            DateTimeFormatter formatoSaida = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
             if (!dataEmprestimo.trim().isEmpty() || !dataDevolucao.trim().isEmpty()) {
                 LocalDate dataEmprestimoParaConverter = LocalDate.parse(dataEmprestimo, formatoEntrada);
                 LocalDate dataDevolucaoParaConverter = LocalDate.parse(dataDevolucao, formatoEntrada);
                 if (isValidDate(dataEmprestimoParaConverter) && isValidDate(dataDevolucaoParaConverter)) {
-                    dataEmprestimoConvertida = dataEmprestimoParaConverter.format(formatoSaida);
-                    dataDevolucaoConvertida = dataDevolucaoParaConverter.format(formatoSaida);
+                    dataEmprestimoConvertida = java.sql.Date.valueOf(dataEmprestimoParaConverter);
+                    dataDevolucaoConvertida = java.sql.Date.valueOf(dataDevolucaoParaConverter);
                 }
             } else {
                 throw new MensagensException("Insira uma data valida");
             }
+            idEmprestimoCadastrado = this.objetoemprestimo.InsertEmprestimoBD(idEmprestimo, dataEmprestimoConvertida, dataDevolucaoConvertida);
+
+            idAmigo = encontrarAmigo(nomeAmigo, emailAmigo).getId();
+            if (marcaFerramenta == null) {
+                throw new MensagensException("Selecione uma ferramenta na lista");
+            }
+            idFerramenta = encontrarFerramenta(nomeFerramenta, marcaFerramenta).getId();
+
+            Amigo amigoHistorico = this.objetoamigo.carregaAmigo(idAmigo);
+            Ferramenta ferramentaHistorico = this.objetoferramenta.carregaFerramenta(idFerramenta);
+            Emprestimo emprestimoHistorico = this.objetoemprestimo.carregaEmprestimo(idEmprestimoCadastrado);
+
+            this.objetohistorico.InsertHistoricoBD(idHistorico, amigoHistorico, ferramentaHistorico, emprestimoHistorico, null);
+            JOptionPane.showMessageDialog(rootPane, "Emprestimo feito com sucesso");
+            limparCampos();
+
         } catch (MensagensException erro) {
             JOptionPane.showMessageDialog(rootPane, erro.getMessage());
         } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
         }
 
 
@@ -368,13 +429,15 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField txtEmailAmigoEmprestimo;
     private javax.swing.JTextField txtNomeAmigoEmprestimo;
     private javax.swing.JTextField txtfildEmprestimoFerramenta;
     // End of variables declaration//GEN-END:variables
 
-    private List<Amigo> filtrarAmigos(String searchTerm) {
+    private List<Amigo> filtrarAmigos(String nomeAmigo, String emailAmigo) {
         List<Amigo> amigosConvertidos = new ArrayList<>();
 
         List<Amigo> amigosEncontrados = null;
@@ -387,8 +450,25 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         }
 
         for (Amigo amigo : amigosEncontrados) {
-            if (amigo.getNome().toLowerCase().contains(searchTerm.toLowerCase()) || amigo.getEmail().toLowerCase().contains(searchTerm.toLowerCase())) {
-                amigosConvertidos.add(amigo);
+            if (!nomeAmigo.isEmpty() && emailAmigo.isEmpty()) {
+                if (amigo.getNome().toLowerCase().contains(nomeAmigo.toLowerCase())) {
+                    amigosConvertidos.add(amigo);
+                }
+            }
+            if (!emailAmigo.isEmpty() && nomeAmigo.isEmpty()) {
+                if (amigo.getEmail().toLowerCase().contains(emailAmigo.toLowerCase())) {
+                    amigosConvertidos.add(amigo);
+                }
+            }
+            if (!emailAmigo.isEmpty() && !nomeAmigo.isEmpty()) {
+                if (amigo.getNome().toLowerCase().contains(nomeAmigo.toLowerCase()) && amigo.getEmail().toLowerCase().contains(emailAmigo.toLowerCase())) {
+                    amigosConvertidos.add(amigo);
+                }
+            }
+            if(emailAmigo.isEmpty() && nomeAmigo.isEmpty()){
+                if (amigo.getNome().toLowerCase().contains(nomeAmigo.toLowerCase()) || amigo.getEmail().toLowerCase().contains(emailAmigo.toLowerCase())){
+                    amigosConvertidos.add(amigo);
+                }
             }
         }
         return amigosConvertidos;
@@ -436,20 +516,16 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         jComboBox2.setModel(comboBoxModel);
     }
 
-    private static boolean isValidDate(Date date) {
-        Date dataAtual = new Date();
+    private static boolean isValidDate(LocalDate date) {
+        LocalDate dataAtual = LocalDate.now();
 
-        if (date.after(dataAtual)) {
+        if (date.isBefore(dataAtual)) {
             return false;
         }
 
-        SimpleDateFormat formatoDia = new SimpleDateFormat("dd");
-        SimpleDateFormat formatoMes = new SimpleDateFormat("MM");
-        SimpleDateFormat formatoAno = new SimpleDateFormat("yyyy");
-
-        int dia = Integer.parseInt(formatoDia.format(date));
-        int mes = Integer.parseInt(formatoMes.format(date));
-        int ano = Integer.parseInt(formatoAno.format(date));
+        int dia = date.getDayOfMonth();
+        int mes = date.getMonthValue();
+        int ano = date.getYear();
 
         if (mes > 12 || dia > 31) {
             return false;
@@ -472,6 +548,67 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         }
 
         return true;
+    }
+
+    private Amigo encontrarAmigo(String nomeAmigo, String emailAmigo) throws MensagensException {
+        Amigo amigoConvertido = new Amigo();
+
+        List<Amigo> amigosEncontrados = null;
+        try {
+            amigosEncontrados = objetoamigo.getMinhaLista();
+        } catch (MensagensException erro) {
+            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
+        }
+
+        for (Amigo amigo : amigosEncontrados) {
+            if (amigo.getNome().toLowerCase().equals(nomeAmigo.toLowerCase()) && amigo.getEmail().toLowerCase().equals(emailAmigo.toLowerCase())) {
+                amigoConvertido = amigo;
+            }
+        }
+        if (amigoConvertido.getNome() == null || amigoConvertido.getNome().isEmpty()) {
+            limparCampos();
+            throw new MensagensException("Selecione um amigo existente");
+        }
+
+        return amigoConvertido;
+    }
+
+    private Ferramenta encontrarFerramenta(String nomeFerramenta, String marcaFerramenta) throws MensagensException {
+        Ferramenta ferramentaConvertida = new Ferramenta();
+
+        List<Ferramenta> ferramentaEncontrada = null;
+        try {
+            ferramentaEncontrada = objetoferramenta.getMinhaLista();
+        } catch (MensagensException erro) {
+            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
+        }
+
+        for (Ferramenta ferramenta : ferramentaEncontrada) {
+            if (ferramenta.getNome().toLowerCase().equals(nomeFerramenta.toLowerCase()) && ferramenta.getMarca().toLowerCase().equals(marcaFerramenta.toLowerCase())) {
+                ferramentaConvertida = ferramenta;
+            }
+        }
+        if (ferramentaConvertida.getNome() == null || ferramentaConvertida.getNome().isEmpty()) {
+            limparCampos();
+            throw new MensagensException("Selecione uma ferramenta existente");
+        }
+        return ferramentaConvertida;
+    }
+
+    private void limparCampos() {
+        this.txtNomeAmigoEmprestimo.setText("");
+        this.txtEmailAmigoEmprestimo.setText("");
+        this.txtfildEmprestimoFerramenta.setText("");
+        this.jFormattedTextField1.setText("");
+        this.jFormattedTextField2.setText("");
+        List<Ferramenta> ferramentaEncontrada = filtrarFerramenta("");
+        exibirResultadosFerramentas(ferramentaEncontrada);
+        List<Amigo> amigosEncontrados = filtrarAmigos("", "");
+        exibirResultadosAmigos(amigosEncontrados);
     }
 
 }

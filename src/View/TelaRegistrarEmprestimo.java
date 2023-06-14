@@ -20,6 +20,9 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import static Utils.Utils.filtrarAmigos;
+import static Utils.Utils.filtrarFerramenta;
+import static Utils.Utils.isValidDate;
 
 public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
 
@@ -32,7 +35,7 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
     private ArrayList<String> listaFerramentasJList;
     private DefaultListModel<String> model;
 
-    public TelaRegistrarEmprestimo() {
+    public TelaRegistrarEmprestimo() throws SQLException, MensagensException {
         initComponents();
         this.objetoamigo = new AmigoDAO();
         this.objetoferramenta = new FerramentaDAO();
@@ -45,20 +48,32 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         DocumentListener documentListener = new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
-                atualizarResultadoPesquisa();
+                try {
+                    atualizarResultadoPesquisa();
+                } catch (SQLException ex) {
+                    Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                atualizarResultadoPesquisa();
+                try {
+                    atualizarResultadoPesquisa();
+                } catch (SQLException ex) {
+                    Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                atualizarResultadoPesquisa();
+                try {
+                    atualizarResultadoPesquisa();
+                } catch (SQLException ex) {
+                    Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
 
-            private void atualizarResultadoPesquisa() {
+            private void atualizarResultadoPesquisa() throws SQLException {
                 String nomeAmigo = txtNomeAmigoEmprestimo.getText();
                 String emailAmigo = txtEmailAmigoEmprestimo.getText();
                 String searchTerm = txtfildEmprestimoFerramenta.getText();
@@ -384,7 +399,12 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
                 if (parts.length == 2) {
                     nomeFerramenta = parts[0].trim();
                     marcaFerramenta = parts[1].trim();
-                    idFerramenta = filtrarFerramenta(nomeFerramenta, marcaFerramenta).get(0).getId();
+                    List<Ferramenta> ferramentaEncontrada = filtrarFerramenta(nomeFerramenta, marcaFerramenta);
+                    if (ferramentaEncontrada.get(0).getNome() == null || ferramentaEncontrada.get(0).getNome().isEmpty()) {
+                        limparCampos();
+                        throw new MensagensException("Selecione uma ferramenta existente");
+                    }
+                    idFerramenta = ferramentaEncontrada.get(0).getId();
                     Ferramenta ferramentaDaLista = this.objetoferramenta.carregaFerramenta(idFerramenta);
                     listaFerramenta.add(ferramentaDaLista);
                 }
@@ -401,8 +421,12 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
                 throw new MensagensException("Insira uma data valida");
             }
             idEmprestimoCadastrado = this.objetoemprestimo.InsertEmprestimoBD(idEmprestimo, dataEmprestimoConvertida, dataDevolucaoConvertida);
-
-            idAmigo = filtrarAmigos(nomeAmigo, emailAmigo).get(0).getId();
+            List<Amigo> amigoEncontrado = filtrarAmigos(nomeAmigo, emailAmigo);
+            if (amigoEncontrado == null) {
+                limparCampos();
+                throw new MensagensException("Selecione um amigo existente");
+            }
+            idAmigo = amigoEncontrado.get(0).getId();
             if (marcaFerramenta == null) {
                 throw new MensagensException("Selecione uma ferramenta na lista");
             }
@@ -460,7 +484,13 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaRegistrarEmprestimo().setVisible(true);
+                try {
+                    new TelaRegistrarEmprestimo().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (MensagensException ex) {
+                    Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -489,47 +519,6 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
     private javax.swing.JTextField txtfildEmprestimoFerramenta;
     // End of variables declaration//GEN-END:variables
 
-    private List<Amigo> filtrarAmigos(String nomeAmigo, String emailAmigo) throws MensagensException {
-        List<Amigo> amigosConvertidos = new ArrayList<>();
-
-        List<Amigo> amigosEncontrados = null;
-        try {
-            amigosEncontrados = objetoamigo.getMinhaLista();
-        } catch (MensagensException ex) {
-            Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        for (Amigo amigo : amigosEncontrados) {
-            if (!nomeAmigo.isEmpty() && emailAmigo.isEmpty()) {
-                if (amigo.getNome().toLowerCase().contains(nomeAmigo.toLowerCase())) {
-                    amigosConvertidos.add(amigo);
-                }
-            }
-            if (!emailAmigo.isEmpty() && nomeAmigo.isEmpty()) {
-                if (amigo.getEmail().toLowerCase().contains(emailAmigo.toLowerCase())) {
-                    amigosConvertidos.add(amigo);
-                }
-            }
-            if (!emailAmigo.isEmpty() && !nomeAmigo.isEmpty()) {
-                if (amigo.getNome().toLowerCase().contains(nomeAmigo.toLowerCase()) && amigo.getEmail().toLowerCase().contains(emailAmigo.toLowerCase())) {
-                    amigosConvertidos.add(amigo);
-                }
-                if (amigosConvertidos == null) {
-                    limparCampos();
-                    throw new MensagensException("Selecione um amigo existente");
-                }
-            }
-            if (emailAmigo.isEmpty() && nomeAmigo.isEmpty()) {
-                if (amigo.getNome().toLowerCase().contains(nomeAmigo.toLowerCase()) || amigo.getEmail().toLowerCase().contains(emailAmigo.toLowerCase())) {
-                    amigosConvertidos.add(amigo);
-                }
-            }
-        }
-        return amigosConvertidos;
-    }
-
     private void exibirResultadosAmigos(List<Amigo> amigosEncontrados) {
         DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
 
@@ -539,38 +528,6 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         }
 
         jComboBox1.setModel(comboBoxModel);
-    }
-
-    private List<Ferramenta> filtrarFerramenta(String termo1, String termo2) throws MensagensException {
-        List<Ferramenta> ferramentaConvertidas = new ArrayList<>();
-
-        List<Ferramenta> ferramentaEncontradas = null;
-        try {
-            ferramentaEncontradas = objetoferramenta.getMinhaLista();
-        } catch (MensagensException ex) {
-            Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (termo2.isEmpty()) {
-            for (Ferramenta ferramenta : ferramentaEncontradas) {
-                if (ferramenta.getNome().toLowerCase().contains(termo1.toLowerCase()) || ferramenta.getMarca().toLowerCase().contains(termo1.toLowerCase())) {
-                    ferramentaConvertidas.add(ferramenta);
-                }
-            }
-        }
-        if (!termo1.isEmpty() && !termo2.isEmpty()) {
-            for (Ferramenta ferramenta : ferramentaEncontradas) {
-                if (ferramenta.getNome().toLowerCase().equals(termo1.toLowerCase()) && ferramenta.getMarca().toLowerCase().equals(termo2.toLowerCase())) {
-                    ferramentaConvertidas.add(ferramenta);
-                }
-            }
-            if (ferramentaConvertidas.get(0).getNome() == null || ferramentaConvertidas.get(0).getNome().isEmpty()) {
-                limparCampos();
-                throw new MensagensException("Selecione uma ferramenta existente");
-            }
-        }
-        return ferramentaConvertidas;
     }
 
     private void exibirResultadosFerramentas(List<Ferramenta> ferramentaEncontrada) {
@@ -584,41 +541,7 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         jComboBox2.setModel(comboBoxModel);
     }
 
-    private static boolean isValidDate(LocalDate date) {
-        LocalDate dataAtual = LocalDate.now();
-
-        if (date.isBefore(dataAtual)) {
-            return false;
-        }
-
-        int dia = date.getDayOfMonth();
-        int mes = date.getMonthValue();
-        int ano = date.getYear();
-
-        if (mes > 12 || dia > 31) {
-            return false;
-        }
-
-        if (mes == 4 || mes == 6 || mes == 9 || mes == 11) {
-            if (dia > 30) {
-                return false;
-            }
-        } else if (mes == 2) {
-            if (ano % 4 == 0 && (ano % 100 != 0 || ano % 400 == 0)) {
-                if (dia > 29) {
-                    return false;
-                }
-            } else {
-                if (dia > 28) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    private void limparCampos() {
+    private void limparCampos() throws SQLException, MensagensException {
         this.txtNomeAmigoEmprestimo.setText("");
         this.txtEmailAmigoEmprestimo.setText("");
         this.txtfildEmprestimoFerramenta.setText("");
@@ -631,10 +554,18 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         } catch (MensagensException ex) {
             Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
         }
+        if (ferramentaEncontrada.get(0).getNome() == null || ferramentaEncontrada.get(0).getNome().isEmpty()) {
+            limparCampos();
+            throw new MensagensException("Selecione uma ferramenta existente");
+        }
         exibirResultadosFerramentas(ferramentaEncontrada);
         List<Amigo> amigosEncontrados = null;
         try {
             amigosEncontrados = filtrarAmigos("", "");
+            if (amigosEncontrados == null) {
+                limparCampos();
+                throw new MensagensException("Selecione um amigo existente");
+            }
         } catch (MensagensException ex) {
             Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
         }

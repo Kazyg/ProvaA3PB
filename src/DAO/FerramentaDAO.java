@@ -11,6 +11,7 @@ import Model.Ferramenta;
 import View.MensagensException;
 
 public class FerramentaDAO {
+
     private ArrayList<Ferramenta> listaFerramenta
             = new ArrayList<>();
 
@@ -50,7 +51,7 @@ public class FerramentaDAO {
                         + "marca, custo "
                         + "FROM tb_ferramenta;");
         while (res.next()) {
-            
+
             int id = res.getInt("idFerramenta");
             String nome = res.getString("nomeFerramenta");
             String marca = res.getString("marca");
@@ -100,5 +101,37 @@ public class FerramentaDAO {
         stmt.close();
 
         return objeto;
+    }
+
+    public boolean DeleteFerramentaBD(int id) throws SQLException {
+        Statement stmt = null;
+        try {
+            stmt = this.getConnection().createStatement();
+            int rowsAffected = stmt.executeUpdate("DELETE FROM tb_ferramenta WHERE idferramenta = " + id);
+            return rowsAffected > 0;
+        } finally {
+            if (stmt != null) {
+                stmt.close();
+            }
+        }
+    }
+    
+    public boolean AlterarFerramentaBD(int id, String nome, String marca, double custo) throws MensagensException, SQLException {
+
+        Ferramenta objeto = new Ferramenta(nome, marca, custo);
+
+        String sql = "UPDATE tb_ferramenta set nomeFerramenta = ?, "
+                + "marca = ?, custo = ? WHERE idferramenta = ?";
+
+        PreparedStatement stmt = this.getConnection().prepareStatement(sql);
+
+        stmt.setString(1, objeto.getNome());
+        stmt.setString(2, objeto.getMarca());
+        stmt.setDouble(3, objeto.getCusto());
+        stmt.setInt(4, id);
+
+        stmt.execute();
+        stmt.close();
+        return true;
     }
 }

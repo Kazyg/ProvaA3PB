@@ -4,6 +4,10 @@
  */
 package View;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author user
@@ -209,7 +213,13 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_menuItemFerramentasActionPerformed
 
     private void menuItemEmprestimoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemEmprestimoActionPerformed
-        new TelaRegistrarEmprestimo().setVisible(true);
+        try {
+            new TelaRegistrarEmprestimo().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (MensagensException ex) {
+            Logger.getLogger(TelaInicial.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_menuItemEmprestimoActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed

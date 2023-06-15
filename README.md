@@ -2,7 +2,7 @@
 
 Este é um sistema de empréstimo de ferramentas para amigos, desenvolvido em Java e utilizando o MySQL como banco de dados. O sistema permite cadastrar amigos, cadastrar ferramentas, realizar empréstimos, realizar a devolução das ferramentas emprestadas e oferece alguns relatórios e funcionalidades adicionais.
 
-## Pré-requisitos
+## 🛠 Pré-requisitos
 
 Antes de executar o sistema, certifique-se de ter instalado os seguintes componentes:
 
@@ -89,7 +89,7 @@ Certifique-se de substituir `server`, `user` e `password` pelas configurações 
 
 4. Execute o script fornecido no banco de dados para popular a tabela com alguns dados de exemplo.
 
-## Funcionalidades
+## ⚙️ Funcionalidades
 
 O sistema possui as seguintes funcionalidades:
 
@@ -102,13 +102,13 @@ O sistema possui as seguintes funcionalidades:
 - Relatório de ferramentas
 - Agenda integrada do Google
 
-## Executando o Projeto
+## 🚀 Executando o Projeto
 
 1. Abra o projeto no NetBeans IDE.
 2. Certifique-se de que as dependências estão configuradas corretamente.
 3. Execute o projeto.
 
-## Contribuidores
+## 👨‍💻 Contribuidores
 
 - [Guilherme Severo](https://github.com/Kazyg)
 - [Douglas Costa](https://github.com/DouglasCostaMMII)

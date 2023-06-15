@@ -39,7 +39,7 @@ public class HistoricoDAO {
                     + ":3306/" + database
                     + "?useTimezone=true&serverTimezone=UTC";
             String user = "root";
-            String password = "xtprox0123456";
+            String password = "suaSenha";
 
             conn = DriverManager.getConnection(url,
                     user, password);

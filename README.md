@@ -62,9 +62,7 @@ CREATE TABLE IF NOT EXISTS `provaa3`.`tb_historico` (
     REFERENCES `provaa3`.`tb_ferramenta` (`idferramenta`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_historico_emprest
-
-imo1`
+  CONSTRAINT `fk_historico_emprestimo1`
     FOREIGN KEY (`emprestimo_idemprestimo`)
     REFERENCES `provaa3`.`tb_emprestimo` (`idemprestimo`)
     ON DELETE NO ACTION

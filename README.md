@@ -118,4 +118,3 @@ O sistema possui as seguintes funcionalidades:
 - [Guilherme](https://github.com/Ignistec)
 - [Gabriel]()
 
-```

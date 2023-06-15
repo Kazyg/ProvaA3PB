@@ -105,18 +105,33 @@ public class HistoricoDAO {
         listaHistoricoPersonalizado.clear();
 
         Statement stmt = this.getConnection().createStatement();
-        ResultSet res
-                = stmt.executeQuery("SELECT\n"
-                        + "  idhistorico, nome, nomeFerramenta, marca, idemprestimo, dataEntregaPrevista, dataEntregaEfetiva\n"
-                        + "FROM\n"
-                        + "  provaa3.tb_historico\n"
-                        + "JOIN\n"
-                        + "  tb_amigo ON tb_historico.amigo_idamigo = tb_amigo.idamigo\n"
-                        + "JOIN\n"
-                        + "  tb_ferramenta ON tb_historico.ferramenta_idferramenta = tb_ferramenta.idferramenta\n"
-                        + "JOIN\n"
-                        + "  tb_emprestimo ON tb_historico.emprestimo_idemprestimo = tb_emprestimo.idemprestimo "
-                        + "where idamigo = " + idRecebido);
+        ResultSet res;
+        if (idRecebido < 0) {
+            res
+                    = stmt.executeQuery("SELECT\n"
+                            + "  idhistorico, nome, nomeFerramenta, marca, idemprestimo, dataEntregaPrevista, dataEmprestimo, dataEntregaEfetiva\n"
+                            + "FROM\n"
+                            + "  provaa3.tb_historico\n"
+                            + "JOIN\n"
+                            + "  tb_amigo ON tb_historico.amigo_idamigo = tb_amigo.idamigo\n"
+                            + "JOIN\n"
+                            + "  tb_ferramenta ON tb_historico.ferramenta_idferramenta = tb_ferramenta.idferramenta\n"
+                            + "JOIN\n"
+                            + "  tb_emprestimo ON tb_historico.emprestimo_idemprestimo = tb_emprestimo.idemprestimo");
+        } else {
+            res
+                    = stmt.executeQuery("SELECT\n"
+                            + "  idhistorico, nome, nomeFerramenta, marca, idemprestimo, dataEntregaPrevista, dataEmprestimo, dataEntregaEfetiva\n"
+                            + "FROM\n"
+                            + "  provaa3.tb_historico\n"
+                            + "JOIN\n"
+                            + "  tb_amigo ON tb_historico.amigo_idamigo = tb_amigo.idamigo\n"
+                            + "JOIN\n"
+                            + "  tb_ferramenta ON tb_historico.ferramenta_idferramenta = tb_ferramenta.idferramenta\n"
+                            + "JOIN\n"
+                            + "  tb_emprestimo ON tb_historico.emprestimo_idemprestimo = tb_emprestimo.idemprestimo "
+                            + "where idamigo = " + idRecebido);
+        }
         while (res.next()) {
 
             int idHistorico = res.getInt("idhistorico");
@@ -124,12 +139,13 @@ public class HistoricoDAO {
             String nomeFerramenta = res.getString("nomeFerramenta");
             String marcaFerramenta = res.getString("marca");
             int idEmprestimo = res.getInt("idemprestimo");
+            Date dataEmprestimo = res.getDate("dataEmprestimo");
             Date dataPrevistaDevolucao = res.getDate("dataEntregaPrevista");
             Date dataEfetivaDevolucao = res.getDate("dataEntregaEfetiva");
             if (res.wasNull()) {
                 dataEfetivaDevolucao = null;
             }
-            HistoricoPersonalizado objeto = new HistoricoPersonalizado(idHistorico, nomeAmigo, nomeFerramenta, marcaFerramenta, idEmprestimo, dataPrevistaDevolucao, dataEfetivaDevolucao);
+            HistoricoPersonalizado objeto = new HistoricoPersonalizado(idHistorico, nomeAmigo, nomeFerramenta, marcaFerramenta, idEmprestimo, dataEmprestimo, dataPrevistaDevolucao, dataEfetivaDevolucao);
 
             listaHistoricoPersonalizado.add(objeto);
         }
@@ -143,7 +159,7 @@ public class HistoricoDAO {
 
         java.util.Date utilDate = dataEfetivaDevolucao; // seu objeto java.util.Date
         java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-        
+
         Historico objeto = new Historico(id, amigo, ferramenta, emprestimo, sqlDate);
 
         String sql = "UPDATE tb_historico set dataEntregaEfetiva = ? "

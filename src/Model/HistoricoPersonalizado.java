@@ -9,21 +9,33 @@ public class HistoricoPersonalizado {
     private String nomeFerramenta;
     private String marcaFerramenta;
     private int idEmprestimo;
+    private Date dataEmprestimo;
     private Date dataEntregaPrevista;
     private Date dataEntregaEfetiva;
 
     public HistoricoPersonalizado() {
     }
 
-    public HistoricoPersonalizado(int idHistorico, String nomeAmigo, String nomeFerramenta, String marcaFerramenta, int idEmprestimo, Date dataEntregaPrevista, Date dataEntregaEfetiva) {
+    public HistoricoPersonalizado(int idHistorico, String nomeAmigo, String nomeFerramenta, String marcaFerramenta, int idEmprestimo, Date dataEmprestimo, Date dataEntregaPrevista, Date dataEntregaEfetiva) {
         this.idHistorico = idHistorico;
         this.nomeAmigo = nomeAmigo;
         this.nomeFerramenta = nomeFerramenta;
         this.marcaFerramenta = marcaFerramenta;
         this.idEmprestimo = idEmprestimo;
+        this.dataEmprestimo = dataEmprestimo;
         this.dataEntregaPrevista = dataEntregaPrevista;
         this.dataEntregaEfetiva = dataEntregaEfetiva;
     }
+
+    public Date getDataEmprestimo() {
+        return dataEmprestimo;
+    }
+
+    public void setDataEmprestimo(Date dataEmprestimo) {
+        this.dataEmprestimo = dataEmprestimo;
+    }
+
+    
 
     public Date getDataEntregaPrevista() {
         return dataEntregaPrevista;

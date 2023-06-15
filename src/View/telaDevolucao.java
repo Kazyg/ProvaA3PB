@@ -197,8 +197,8 @@ public class TelaDevolucao extends javax.swing.JFrame {
                 try {
                     String nome = parts[0].trim();
                     String email = parts[1].trim();
-                    txtNomeAmigoDevolucao.setText(nome);
-                    txtEmailAmigoDevolucao.setText(email);
+                    txtNomeAmigoDevolucao.setText("");
+                    txtEmailAmigoDevolucao.setText("");
                     List<Amigo> amigoEncontrado = filtrarAmigos(nome, email);
                     idAmigo = amigoEncontrado.get(0).getId();
                     amigoEncontrado.clear();
@@ -245,6 +245,7 @@ public class TelaDevolucao extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, erro.getMessage());
         } finally {
             limparTabela();
+            limparCampos();
             criarEvento();
         }
     }//GEN-LAST:event_btnEfeturarDevolucaoActionPerformed

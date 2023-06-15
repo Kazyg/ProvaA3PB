@@ -7,6 +7,7 @@ import DAO.HistoricoDAO;
 import Model.Amigo;
 import Model.Emprestimo;
 import Model.Ferramenta;
+import Model.Historico;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -390,8 +391,9 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
             Integer idAmigo,
                     idFerramenta;
             int idEmprestimo = 0,
-                    idEmprestimoCadastrado,
-                    idHistorico = 0;
+                    idHistorico = 0,
+                    resposta = -2;
+
             DateTimeFormatter formatoEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
             for (String item : listaFerramentasJList) {
@@ -406,13 +408,27 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
                     }
                     idFerramenta = ferramentaEncontrada.get(0).getId();
                     Ferramenta ferramentaDaLista = this.objetoferramenta.carregaFerramenta(idFerramenta);
-                    listaFerramenta.add(ferramentaDaLista);
+                    boolean ferramentaExistente = false;
+                    for (Ferramenta ferramenta : listaFerramenta) {
+                        if (ferramenta.getId() == ferramentaDaLista.getId()) {
+                            ferramentaExistente = true;
+                            break; // Se a ferramenta já existe, interrompe o loop
+                        }
+                    }
+
+                    if (!ferramentaExistente) {
+                        listaFerramenta.add(ferramentaDaLista);
+                    }
+
                 }
             }
 
             if (!dataEmprestimo.trim().isEmpty() || !dataDevolucao.trim().isEmpty()) {
                 LocalDate dataEmprestimoParaConverter = LocalDate.parse(dataEmprestimo, formatoEntrada);
                 LocalDate dataDevolucaoParaConverter = LocalDate.parse(dataDevolucao, formatoEntrada);
+                if (dataDevolucaoParaConverter.isBefore(dataEmprestimoParaConverter)) {
+                    throw new MensagensException("Insira uma data valida");
+                }
                 if (isValidDate(dataEmprestimoParaConverter) && isValidDate(dataDevolucaoParaConverter)) {
                     dataEmprestimoConvertida = java.sql.Date.valueOf(dataEmprestimoParaConverter);
                     dataDevolucaoConvertida = java.sql.Date.valueOf(dataDevolucaoParaConverter);
@@ -420,7 +436,7 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
             } else {
                 throw new MensagensException("Insira uma data valida");
             }
-            idEmprestimoCadastrado = this.objetoemprestimo.InsertEmprestimoBD(idEmprestimo, dataEmprestimoConvertida, dataDevolucaoConvertida);
+
             List<Amigo> amigoEncontrado = filtrarAmigos(nomeAmigo, emailAmigo);
             if (amigoEncontrado == null) {
                 limparCampos();
@@ -430,15 +446,36 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
             if (marcaFerramenta == null) {
                 throw new MensagensException("Selecione uma ferramenta na lista");
             }
-
-            Amigo amigoHistorico = this.objetoamigo.carregaAmigo(idAmigo);
-            Emprestimo emprestimoHistorico = this.objetoemprestimo.carregaEmprestimo(idEmprestimoCadastrado);
-
-            for (Ferramenta ferramentaHistorico : listaFerramenta) {
-                this.objetohistorico.InsertHistoricoBD(idHistorico, amigoHistorico, ferramentaHistorico, emprestimoHistorico, null);
+            List<Historico> historico = objetohistorico.getMinhaLista();
+            for (Historico h : historico) {
+                for (Ferramenta ferramentaHistorico : listaFerramenta) {
+                    if (h.getFerramenta().getId() == ferramentaHistorico.getId() && h.getDataEfetivaDevolucao() == null) {
+                        limparCampos();
+                        throw new MensagensException("Não é possível emprestar uma ferramenta que está emprestada.");
+                    }
+                }
             }
-            JOptionPane.showMessageDialog(rootPane, "Emprestimo feito com sucesso");
-            limparCampos();
+            for (Historico h : historico) {
+                if (h.getAmigo().getId() == amigoEncontrado.get(0).getId() && h.getDataEfetivaDevolucao() == null) {
+                    resposta = JOptionPane.showConfirmDialog(rootPane, "O amigo selecionado ja tem um emprestimo ativo, deseja continuar?");
+                    break;
+                }
+            }
+            switch (resposta) {
+                case 0:
+                    realizarEmprestimo(idEmprestimo, dataEmprestimoConvertida, dataDevolucaoConvertida, idAmigo, listaFerramenta, idHistorico);
+                    break;
+                case 1:
+                    limparCampos();
+                    break;
+                case 2:
+                    limparCampos();
+                    break;
+                case -1:
+                    break;
+                default:
+                    realizarEmprestimo(idEmprestimo, dataEmprestimoConvertida, dataDevolucaoConvertida, idAmigo, listaFerramenta, idHistorico);
+            }
 
         } catch (MensagensException erro) {
             JOptionPane.showMessageDialog(rootPane, erro.getMessage());
@@ -539,6 +576,25 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         }
 
         jComboBox2.setModel(comboBoxModel);
+    }
+
+    private void realizarEmprestimo(int idEmprestimo, Date dataEmprestimo, Date dataDevolucao, int idAmigo, List<Ferramenta> listaFerramenta, int idHistorico) {
+        int idEmprestimoCadastrado;
+        try {
+            idEmprestimoCadastrado = this.objetoemprestimo.InsertEmprestimoBD(idEmprestimo, dataEmprestimo, dataDevolucao);
+            Amigo amigoHistorico = this.objetoamigo.carregaAmigo(idAmigo);
+            Emprestimo emprestimoHistorico = this.objetoemprestimo.carregaEmprestimo(idEmprestimoCadastrado);
+
+            for (Ferramenta ferramentaHistorico : listaFerramenta) {
+                this.objetohistorico.InsertHistoricoBD(idHistorico, amigoHistorico, ferramentaHistorico, emprestimoHistorico, null);
+            }
+            JOptionPane.showMessageDialog(rootPane, "Emprestimo feito com sucesso");
+            limparCampos();
+        } catch (MensagensException ex) {
+            Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void limparCampos() throws SQLException, MensagensException {

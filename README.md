@@ -110,8 +110,6 @@ O sistema possui as seguintes funcionalidades:
 
 ## Contribuidores
 
-Agradecemos aos seguintes contribuidores por suas contribuições para o projeto:
-
 - [Guilherme Severo](https://github.com/Kazyg)
 - [Douglas Costa](https://github.com/DouglasCostaMMII)
 - [Giovani](https://github.com/giovanigerci)
@@ -120,12 +118,4 @@ Agradecemos aos seguintes contribuidores por suas contribuições para o projeto
 - [Guilherme](https://github.com/Ignistec)
 - [Gabriel]()
 
-
-## Contribuindo
-
-Sinta-se à vontade para contribuir com melhorias, correções de bugs ou novas funcionalidades para o sistema. Para isso, siga as diretrizes de contribuição do projeto.
-
-## Licença
-
-Este projeto está licenciado sob a [Licença MIT](LICENSE).
 ```

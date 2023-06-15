@@ -108,6 +108,19 @@ O sistema possui as seguintes funcionalidades:
 2. Certifique-se de que as dependências estão configuradas corretamente.
 3. Execute o projeto.
 
+## Contribuidores
+
+Agradecemos aos seguintes contribuidores por suas contribuições para o projeto:
+
+- [Guilherme Severo](https://github.com/Kazyg)
+- [Douglas Costa](https://github.com/DouglasCostaMMII)
+- [Giovani](https://github.com/giovanigerci)
+- [Camille](https://github.com/hillecammi)
+- [Tatiane](https://github.com/Tatihub1)
+- [Guilherme](https://github.com/Ignistec)
+- [Gabriel]()
+
+
 ## Contribuindo
 
 Sinta-se à vontade para contribuir com melhorias, correções de bugs ou novas funcionalidades para o sistema. Para isso, siga as diretrizes de contribuição do projeto.

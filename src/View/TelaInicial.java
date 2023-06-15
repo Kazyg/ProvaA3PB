@@ -52,7 +52,7 @@ public class TelaInicial extends javax.swing.JFrame {
         menuItemTodosRelatorios = new javax.swing.JMenuItem();
         menuDevolucao = new javax.swing.JMenu();
         menuItemEmprestimo = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        menuTelaDevolucao = new javax.swing.JMenuItem();
         menuAgenda = new javax.swing.JMenu();
         menuItemAgenda = new javax.swing.JMenuItem();
         menuItemSair = new javax.swing.JMenu();
@@ -157,14 +157,14 @@ public class TelaInicial extends javax.swing.JFrame {
         });
         menuDevolucao.add(menuItemEmprestimo);
 
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ICONS/icons 1/asterisk_yellow.png"))); // NOI18N
-        jMenuItem4.setText("Devolução");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+        menuTelaDevolucao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ICONS/icons 1/asterisk_yellow.png"))); // NOI18N
+        menuTelaDevolucao.setText("Devolução");
+        menuTelaDevolucao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+                menuTelaDevolucaoActionPerformed(evt);
             }
         });
-        menuDevolucao.add(jMenuItem4);
+        menuDevolucao.add(menuTelaDevolucao);
 
         jMenuBar1.add(menuDevolucao);
 
@@ -248,9 +248,9 @@ public class TelaInicial extends javax.swing.JFrame {
         new TelaAgenda().setVisible(true);
     }//GEN-LAST:event_menuItemAgendaActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    private void menuTelaDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuTelaDevolucaoActionPerformed
+        new TelaDevolucao().setVisible(true);
+    }//GEN-LAST:event_menuTelaDevolucaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -304,7 +304,6 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JMenu menuAgenda;
     private javax.swing.JMenu menuDevolucao;
@@ -316,5 +315,6 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuItemFerramentas;
     private javax.swing.JMenu menuItemSair;
     private javax.swing.JMenuItem menuItemTodosRelatorios;
+    private javax.swing.JMenuItem menuTelaDevolucao;
     // End of variables declaration//GEN-END:variables
 }

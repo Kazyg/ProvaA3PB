@@ -137,7 +137,7 @@ public class TelaInicial extends javax.swing.JFrame {
         MenuRelatorio.add(menuItemFerramentas);
 
         menuItemTodosRelatorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ICONS/icons 1/application_view_list.png"))); // NOI18N
-        menuItemTodosRelatorios.setText("Todas os relatórios");
+        menuItemTodosRelatorios.setText("Todos os relatórios");
         menuItemTodosRelatorios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuItemTodosRelatoriosActionPerformed(evt);

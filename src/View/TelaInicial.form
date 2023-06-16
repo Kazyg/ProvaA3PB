@@ -136,7 +136,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/images/ICONS/icons 1/application_view_list.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Todas os relat&#xf3;rios"/>
+                <Property name="text" type="java.lang.String" value="Todos os relat&#xf3;rios"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemTodosRelatoriosActionPerformed"/>

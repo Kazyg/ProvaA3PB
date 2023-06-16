@@ -6,6 +6,7 @@ package View;
 
 import DAO.FerramentaDAO;
 import Model.Ferramenta;
+import static Utils.Utils.validarNome;
 import static java.lang.Double.parseDouble;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -158,7 +159,7 @@ public class TelaCadastroFerramenta extends javax.swing.JFrame {
 
             custo = parseDouble(this.txtCustoFerramenta.getText());
 
-            if (nome.length() < 2) {
+            if (nome.length() < 2 || !validarNome(nome)) {
                 throw new MensagensException("Preencha um nome valido");
             }
 

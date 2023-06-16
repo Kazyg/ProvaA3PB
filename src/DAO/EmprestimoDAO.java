@@ -11,42 +11,16 @@ import Model.Emprestimo;
 import View.MensagensException;
 import java.util.Date;
 
-public class EmprestimoDAO {
+public class EmprestimoDAO extends BaseDAO{
 
     private ArrayList<Emprestimo> listaEmprestimo
             = new ArrayList<>();
-
-    public Connection getConnection() {
-        Connection conn = null;
-
-        try {
-            // Carregamento do JDBC Driver
-            String driver = "com.mysql.cj.jdbc.Driver";
-            Class.forName(driver);
-            // Configurar a conexão
-            String server = "localhost"; //caminho do MySQL
-            String database = "provaa3";
-            String url = "jdbc:mysql://" + server
-                    + ":3306/" + database
-                    + "?useTimezone=true&serverTimezone=UTC";
-            String user = "root";
-            String password = "suaSenha";
-
-            conn = DriverManager.getConnection(url,
-                    user, password);
-        } catch (SQLException erro) {
-            erro.printStackTrace();
-        } catch (ClassNotFoundException erro) {
-            erro.printStackTrace();
-        }
-        return conn;
-    }
 
     public ArrayList<Emprestimo> getMinhaLista() throws MensagensException, SQLException {
 
         listaEmprestimo.clear(); // Limpa nosso ArrayList
 
-        Statement stmt = this.getConnection().createStatement();
+        Statement stmt = super.getConnection().createStatement();
         ResultSet res
                 = stmt.executeQuery("SELECT idemprestimo, dataEmprestimo, dataEntregaPrevista "
                         + "FROM tb_Emprestimo;");
@@ -66,12 +40,12 @@ public class EmprestimoDAO {
     }
 
     public int InsertEmprestimoBD(int id, Date dataRetirada, Date dataPrevistaDevolucao) throws MensagensException, SQLException {
-        Emprestimo objeto = new Emprestimo(id, dataRetirada, dataPrevistaDevolucao);
+        Emprestimo objeto = new Emprestimo(id, dataPrevistaDevolucao, dataRetirada);
         String sql = "INSERT INTO "
                 + "tb_emprestimo(idemprestimo, dataEmprestimo, dataEntregaPrevista) "
                 + "VALUES(?,?,?)";
 
-        PreparedStatement stmt = this.getConnection().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement stmt = super.getConnection().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 
         stmt.setInt(1, objeto.getId());
         stmt.setDate(2, (java.sql.Date) objeto.getDataRetirada());
@@ -91,7 +65,7 @@ public class EmprestimoDAO {
     public Emprestimo carregaEmprestimo(int id) throws SQLException, MensagensException {
         Emprestimo objeto = new Emprestimo();
 
-        Statement stmt = this.getConnection().createStatement();
+        Statement stmt = super.getConnection().createStatement();
         ResultSet res = stmt.executeQuery("SELECT * "
                 + "FROM tb_emprestimo WHERE idemprestimo = " + id);
         res.next();

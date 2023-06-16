@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class Utils {
@@ -111,6 +113,15 @@ public class Utils {
         }
 
         return true;
+    }
+    
+    public static boolean validarNome(String nome) {
+        String padrao = "^[A-Za-z\\s]+$";
+
+        Pattern pattern = Pattern.compile(padrao);
+        Matcher matcher = pattern.matcher(nome);
+
+        return matcher.matches();
     }
     
 }

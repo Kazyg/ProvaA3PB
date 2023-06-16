@@ -15,7 +15,7 @@ import Model.HistoricoPersonalizado;
 import View.MensagensException;
 import java.util.Date;
 
-public class HistoricoDAO {
+public class HistoricoDAO extends BaseDAO{
 
     private ArrayList<Historico> listaHistorico
             = new ArrayList<>();
@@ -25,37 +25,11 @@ public class HistoricoDAO {
     private final FerramentaDAO ferramentaDAO = new FerramentaDAO();
     private final EmprestimoDAO emprestimoDAO = new EmprestimoDAO();
 
-    public Connection getConnection() {
-        Connection conn = null;
-
-        try {
-            // Carregamento do JDBC Driver
-            String driver = "com.mysql.cj.jdbc.Driver";
-            Class.forName(driver);
-            // Configurar a conexão
-            String server = "localhost"; //caminho do MySQL
-            String database = "provaa3";
-            String url = "jdbc:mysql://" + server
-                    + ":3306/" + database
-                    + "?useTimezone=true&serverTimezone=UTC";
-            String user = "root";
-            String password = "suaSenha";
-
-            conn = DriverManager.getConnection(url,
-                    user, password);
-        } catch (SQLException erro) {
-            erro.printStackTrace();
-        } catch (ClassNotFoundException erro) {
-            erro.printStackTrace();
-        }
-        return conn;
-    }
-
     public ArrayList<Historico> getMinhaLista() throws MensagensException, SQLException {
 
         listaHistorico.clear();
 
-        Statement stmt = this.getConnection().createStatement();
+        Statement stmt = super.getConnection().createStatement();
         ResultSet res
                 = stmt.executeQuery("SELECT idhistorico, amigo_idamigo, "
                         + "ferramenta_idferramenta, emprestimo_idemprestimo, dataEntregaEfetiva  "
@@ -86,7 +60,7 @@ public class HistoricoDAO {
                 + "tb_historico(idhistorico, amigo_idamigo, ferramenta_idferramenta, emprestimo_idemprestimo, dataEntregaEfetiva) "
                 + "VALUES(?,?,?,?,?)";
 
-        PreparedStatement stmt = this.getConnection().prepareStatement(sql);
+        PreparedStatement stmt = super.getConnection().prepareStatement(sql);
 
         stmt.setInt(1, objeto.getId());
         stmt.setInt(2, objeto.getAmigo().getId());
@@ -104,7 +78,7 @@ public class HistoricoDAO {
 
         listaHistoricoPersonalizado.clear();
 
-        Statement stmt = this.getConnection().createStatement();
+        Statement stmt = super.getConnection().createStatement();
         ResultSet res;
         if (idRecebido < 0) {
             res
@@ -165,7 +139,7 @@ public class HistoricoDAO {
         String sql = "UPDATE tb_historico set dataEntregaEfetiva = ? "
                 + "WHERE idhistorico = ?";
 
-        PreparedStatement stmt = this.getConnection().prepareStatement(sql);
+        PreparedStatement stmt = super.getConnection().prepareStatement(sql);
 
         stmt.setDate(1, (java.sql.Date) objeto.getDataEfetivaDevolucao());
         stmt.setInt(2, objeto.getId());

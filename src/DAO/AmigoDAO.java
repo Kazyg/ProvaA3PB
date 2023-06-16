@@ -1,7 +1,5 @@
 package DAO;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,42 +8,16 @@ import java.util.ArrayList;
 import Model.Amigo;
 import View.MensagensException;
 
-public class AmigoDAO {
+public class AmigoDAO extends BaseDAO{
 
     private ArrayList<Amigo> listaAmigo
             = new ArrayList<>();
-
-    public Connection getConnection() {
-        Connection conn = null;
-
-        try {
-            // Carregamento do JDBC Driver
-            String driver = "com.mysql.cj.jdbc.Driver";
-            Class.forName(driver);
-            // Configurar a conexão
-            String server = "localhost"; //caminho do MySQL
-            String database = "provaa3";
-            String url = "jdbc:mysql://" + server
-                    + ":3306/" + database
-                    + "?useTimezone=true&serverTimezone=UTC";
-            String user = "root";
-            String password = "suaSenha";
-
-            conn = DriverManager.getConnection(url,
-                    user, password);
-        } catch (SQLException erro) {
-            erro.printStackTrace();
-        } catch (ClassNotFoundException erro) {
-            erro.printStackTrace();
-        }
-        return conn;
-    }
 
     public ArrayList<Amigo> getMinhaLista() throws MensagensException, SQLException {
 
         listaAmigo.clear(); // Limpa nosso ArrayList
 
-        Statement stmt = this.getConnection().createStatement();
+        Statement stmt = super.getConnection().createStatement();
         ResultSet res
                 = stmt.executeQuery("SELECT idamigo, nome, "
                         + "telefone, email "
@@ -72,7 +44,7 @@ public class AmigoDAO {
                 + "tb_amigo(idamigo, nome, telefone, email) "
                 + "VALUES(?,?,?,?)";
 
-        PreparedStatement stmt = this.getConnection().prepareStatement(sql);
+        PreparedStatement stmt = super.getConnection().prepareStatement(sql);
 
         stmt.setInt(1, objeto.getId());
         stmt.setString(2, objeto.getNome());
@@ -88,7 +60,7 @@ public class AmigoDAO {
     public Amigo carregaAmigo(int id) throws SQLException, MensagensException {
         Amigo objeto = new Amigo();
 
-        Statement stmt = this.getConnection().createStatement();
+        Statement stmt = super.getConnection().createStatement();
         ResultSet res = stmt.executeQuery("SELECT * "
                 + "FROM tb_amigo WHERE idamigo = " + id);
         res.next();

@@ -55,6 +55,7 @@ public class TelaInicial extends javax.swing.JFrame {
         menuTelaDevolucao = new javax.swing.JMenuItem();
         menuAgenda = new javax.swing.JMenu();
         menuItemAgenda = new javax.swing.JMenuItem();
+        menuItemAgenda1 = new javax.swing.JMenuItem();
         menuItemSair = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
 
@@ -179,6 +180,15 @@ public class TelaInicial extends javax.swing.JFrame {
         });
         menuAgenda.add(menuItemAgenda);
 
+        menuItemAgenda1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/ICONS/icons 1/date_add.png"))); // NOI18N
+        menuItemAgenda1.setText("Evento");
+        menuItemAgenda1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemAgenda1ActionPerformed(evt);
+            }
+        });
+        menuAgenda.add(menuItemAgenda1);
+
         jMenuBar1.add(menuAgenda);
 
         menuItemSair.setText("Sair");
@@ -252,6 +262,10 @@ public class TelaInicial extends javax.swing.JFrame {
         new TelaDevolucao().setVisible(true);
     }//GEN-LAST:event_menuTelaDevolucaoActionPerformed
 
+    private void menuItemAgenda1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemAgenda1ActionPerformed
+        new CriarEvento().setVisible(true);
+    }//GEN-LAST:event_menuItemAgenda1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -308,6 +322,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JMenu menuAgenda;
     private javax.swing.JMenu menuDevolucao;
     private javax.swing.JMenuItem menuItemAgenda;
+    private javax.swing.JMenuItem menuItemAgenda1;
     private javax.swing.JMenuItem menuItemAmigos;
     private javax.swing.JMenuItem menuItemAtivos;
     private javax.swing.JMenuItem menuItemCadastro;

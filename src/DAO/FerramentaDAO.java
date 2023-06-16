@@ -10,42 +10,16 @@ import java.util.ArrayList;
 import Model.Ferramenta;
 import View.MensagensException;
 
-public class FerramentaDAO {
+public class FerramentaDAO extends BaseDAO{
 
     private ArrayList<Ferramenta> listaFerramenta
             = new ArrayList<>();
-
-    public Connection getConnection() {
-        Connection conn = null;
-
-        try {
-            // Carregamento do JDBC Driver
-            String driver = "com.mysql.cj.jdbc.Driver";
-            Class.forName(driver);
-            // Configurar a conexão
-            String server = "localhost"; //caminho do MySQL
-            String database = "provaa3";
-            String url = "jdbc:mysql://" + server
-                    + ":3306/" + database
-                    + "?useTimezone=true&serverTimezone=UTC";
-            String user = "root";
-            String password = "suaSenha";
-
-            conn = DriverManager.getConnection(url,
-                    user, password);
-        } catch (SQLException erro) {
-            erro.printStackTrace();
-        } catch (ClassNotFoundException erro) {
-            erro.printStackTrace();
-        }
-        return conn;
-    }
 
     public ArrayList<Ferramenta> getMinhaLista() throws MensagensException, SQLException {
 
         listaFerramenta.clear(); // Limpa nosso ArrayList
 
-        Statement stmt = this.getConnection().createStatement();
+        Statement stmt = super.getConnection().createStatement();
         ResultSet res
                 = stmt.executeQuery("SELECT idferramenta, nomeFerramenta, "
                         + "marca, custo "
@@ -72,7 +46,7 @@ public class FerramentaDAO {
                 + "tb_ferramenta(idferramenta, nomeFerramenta, marca, custo) "
                 + "VALUES(?,?,?,?)";
 
-        PreparedStatement stmt = this.getConnection().prepareStatement(sql);
+        PreparedStatement stmt = super.getConnection().prepareStatement(sql);
 
         stmt.setInt(1, objeto.getId());
         stmt.setString(2, objeto.getNome());
@@ -88,7 +62,7 @@ public class FerramentaDAO {
     public Ferramenta carregaFerramenta(int id) throws SQLException, MensagensException {
         Ferramenta objeto = new Ferramenta();
 
-        Statement stmt = this.getConnection().createStatement();
+        Statement stmt = super.getConnection().createStatement();
         ResultSet res = stmt.executeQuery("SELECT * "
                 + "FROM tb_ferramenta WHERE idferramenta = " + id);
         res.next();
@@ -123,7 +97,7 @@ public class FerramentaDAO {
         String sql = "UPDATE tb_ferramenta set nomeFerramenta = ?, "
                 + "marca = ?, custo = ? WHERE idferramenta = ?";
 
-        PreparedStatement stmt = this.getConnection().prepareStatement(sql);
+        PreparedStatement stmt = super.getConnection().prepareStatement(sql);
 
         stmt.setString(1, objeto.getNome());
         stmt.setString(2, objeto.getMarca());

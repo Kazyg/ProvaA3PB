@@ -2,6 +2,7 @@ package View;
 
 import DAO.AmigoDAO;
 import Model.Amigo;
+import static Utils.Utils.validarNome;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -175,7 +176,7 @@ public class TelaCadastroAmigo extends javax.swing.JFrame {
             telefone = this.txtTelefoneAmigo.getText();
             email = this.txtEmail.getText().toLowerCase();
 
-            if (nome.length() < 3) {
+            if (nome.length() < 2 || !validarNome(nome)) {
                 throw new MensagensException("Preencha um nome valido");
             }
 

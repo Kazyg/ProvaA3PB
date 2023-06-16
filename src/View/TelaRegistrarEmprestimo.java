@@ -466,6 +466,7 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
                     Emprestimo idEmprestimoValida = objetoemprestimo.carregaEmprestimo(h.getEmprestimo().getId());
                     if (h.getDataEfetivaDevolucao().after(idEmprestimoValida.getDataPrevistaDevolucao())) {
                         resposta = JOptionPane.showConfirmDialog(rootPane, "O amigo selecionado ja entregou ferramentas com atraso, deseja continuar?");
+                        break;
                     }
                 }
             }

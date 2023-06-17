@@ -25,10 +25,15 @@ public class CriarEvento extends javax.swing.JFrame {
     private List<String> listaEmailsJList;
     private DefaultListModel<String> model;
     
-    public CriarEvento() {
+    public CriarEvento() throws SQLException {
         initComponents();
         this.listaEmailsJList = new ArrayList<>();
         this.model = new DefaultListModel<>();
+        try {
+            limparCampos();
+        } catch (MensagensException ex) {
+            Logger.getLogger(CriarEvento.class.getName()).log(Level.SEVERE, null, ex);
+        }
         DocumentListener documentListener = new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -296,17 +301,6 @@ public class CriarEvento extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCriarEventoActionPerformed
 
-   
-    public static void main(String args[]) {
-        
-
-        
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CriarEvento().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCriarEvento;

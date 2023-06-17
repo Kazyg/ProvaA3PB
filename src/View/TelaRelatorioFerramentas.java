@@ -368,6 +368,10 @@ public final class TelaRelatorioFerramentas extends javax.swing.JFrame {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         int idFerramenta = 0;
+        String nomeFerramenta = txtCampoNomeFerramento.getText(),
+                marcaFerramenta = txtCampoMarcaFerramento.getText();
+        double custoFerramenta;
+
         try {
 
             if (selectedRows.isEmpty()) {
@@ -377,9 +381,20 @@ public final class TelaRelatorioFerramentas extends javax.swing.JFrame {
                 throw new MensagensException("Selecione apenas uma ferramenta para alterar");
             } else {
                 try {
+                    if (nomeFerramenta.isEmpty()) {
+                        nomeFerramenta = this.TableRelatorioFerramentas.getValueAt(selectedRows.get(0), 1).toString();
+                    }
+                    if (marcaFerramenta.isEmpty()) {
+                        marcaFerramenta = this.TableRelatorioFerramentas.getValueAt(selectedRows.get(0), 2).toString();
+                    }
+                    if (txtCampoCustoFerramento.getText().isEmpty()) {
+                        custoFerramenta = parseDouble(this.TableRelatorioFerramentas.getValueAt(selectedRows.get(0), 3).toString());
+                    } else {
+                        custoFerramenta = parseDouble(txtCampoCustoFerramento.getText());
+                    }
                     List<Ferramenta> ferramentaEncontrada = filtrarFerramenta(this.TableRelatorioFerramentas.getValueAt(selectedRows.get(0), 1).toString(), this.TableRelatorioFerramentas.getValueAt(selectedRows.get(0), 2).toString());
                     idFerramenta = ferramentaEncontrada.get(0).getId();
-                    this.objferramenta.AlterarFerramentaBD(idFerramenta, txtCampoNomeFerramento.getText(), txtCampoMarcaFerramento.getText(), parseDouble(txtCampoCustoFerramento.getText()));
+                    this.objferramenta.AlterarFerramentaBD(idFerramenta, nomeFerramenta, marcaFerramenta, custoFerramenta);
                 } catch (SQLException ex) {
                     Logger.getLogger(TelaRelatorioFerramentas.class.getName()).log(Level.SEVERE, null, ex);
                 }

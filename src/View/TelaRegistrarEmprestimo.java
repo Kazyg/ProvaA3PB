@@ -8,6 +8,7 @@ import Model.Amigo;
 import Model.Emprestimo;
 import Model.Ferramenta;
 import Model.Historico;
+import static Utils.GoogleCalendarIntegration.criarEvento;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -24,6 +25,7 @@ import javax.swing.event.DocumentListener;
 import static Utils.Utils.filtrarAmigos;
 import static Utils.Utils.filtrarFerramenta;
 import static Utils.Utils.isValidDate;
+import com.google.api.client.util.DateTime;
 
 public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
 
@@ -380,8 +382,7 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox2ActionPerformed
 
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
-        try {
-            String nomeAmigo = txtNomeAmigoEmprestimo.getText(),
+        String nomeAmigo = txtNomeAmigoEmprestimo.getText(),
                     emailAmigo = txtEmailAmigoEmprestimo.getText(),
                     nomeFerramenta,
                     dataEmprestimo = dataEmprestimoEfetuado.getText(),
@@ -393,6 +394,8 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
             int idEmprestimo = 0,
                     idHistorico = 0,
                     resposta = -2;
+        try {
+            
 
             DateTimeFormatter formatoEntrada = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
@@ -472,7 +475,7 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
             }
             switch (resposta) {
                 case 0:
-                    realizarEmprestimo(idEmprestimo, dataEmprestimoConvertida, dataDevolucaoConvertida, idAmigo, listaFerramenta, idHistorico);
+                    realizarEmprestimo(idEmprestimo, dataEmprestimoConvertida, dataDevolucaoConvertida, idAmigo, listaFerramenta, idHistorico, emailAmigo);
                     break;
                 case 1:
                     limparCampos();
@@ -483,14 +486,14 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
                 case -1:
                     break;
                 default:
-                    realizarEmprestimo(idEmprestimo, dataEmprestimoConvertida, dataDevolucaoConvertida, idAmigo, listaFerramenta, idHistorico);
+                    realizarEmprestimo(idEmprestimo, dataEmprestimoConvertida, dataDevolucaoConvertida, idAmigo, listaFerramenta, idHistorico, emailAmigo);
             }
 
         } catch (MensagensException erro) {
             JOptionPane.showMessageDialog(rootPane, erro.getMessage());
         } catch (SQLException erro) {
             JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-        }
+        } 
 
 
     }//GEN-LAST:event_btnRegistroActionPerformed
@@ -587,7 +590,7 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
         jComboBox2.setModel(comboBoxModel);
     }
 
-    private void realizarEmprestimo(int idEmprestimo, Date dataEmprestimo, Date dataDevolucao, int idAmigo, List<Ferramenta> listaFerramenta, int idHistorico) {
+    private void realizarEmprestimo(int idEmprestimo, Date dataEmprestimo, Date dataDevolucao, int idAmigo, List<Ferramenta> listaFerramenta, int idHistorico, String emailAmigo) {
         int idEmprestimoCadastrado;
         try {
             idEmprestimoCadastrado = this.objetoemprestimo.InsertEmprestimoBD(idEmprestimo, dataEmprestimo, dataDevolucao);
@@ -598,6 +601,10 @@ public class TelaRegistrarEmprestimo extends javax.swing.JFrame {
                 this.objetohistorico.InsertHistoricoBD(idHistorico, amigoHistorico, ferramentaHistorico, emprestimoHistorico, null);
             }
             JOptionPane.showMessageDialog(rootPane, "Emprestimo feito com sucesso");
+            DateTime dataEventoEntrega = new DateTime(dataDevolucao);
+            List<String> emailEvento = new ArrayList<>();
+            emailEvento.add(emailAmigo);
+            criarEvento(emailEvento, dataEventoEntrega, "Entregar Ferramenta Emprestada");
             limparCampos();
         } catch (MensagensException ex) {
             Logger.getLogger(TelaRegistrarEmprestimo.class.getName()).log(Level.SEVERE, null, ex);

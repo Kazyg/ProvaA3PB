@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "provaa3",
+  "private_key_id": "37279a88a50f4567a1eb8c0a9d3eea72ccbe0cc4",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC9efdziHxHOdGl\naeZ3XMjL7r49K0mYjuKpxpEEBf8NQxz+pntkWPlACUT31LWJNOpK/bV7SJMEdPVL\nCbKgp4NktACoegOTyPCFYAHQ2UmoDwtmyS5fMSImyKI9M597CYaoe+fy2aob+GPj\naquFkr0T2NhjQ+L6D2sXsRy6iezjtUQe0CTeXNLXpQtg4qVps6AMClpmBa+naJS4\n/VExKD/LpdDz2oU/tfmb0Fyz5IszWg3odLPQYN11NdlVkLaXVqGRkR1jcxENDgaT\ndHs5UJHBoH3Tm3w1puwNmthj7Xef4kJaWqCxLlW02ralw7iCggAHNKThhdCSNN7X\nudv16jSJAgMBAAECggEASmtXrhiK23zRo1sDSpl2QmbscGEKoHFqhE050u85/G8C\nOeCQsVqi1yxs2rxAavoOFdMtTxUzrTn0x/qwnpn8qPZsFcAKnKZ9FZ2eSPW3ENuL\n2lylKn1FUR9XXZtjhbM5oP49nWwxfJfkP8O7R5TZT6zJXL+irB2XLfCB/KBEmzB/\nYqXuBURBNP9lvNTKDdTVM1VwjqGmO8qmlW5tSGFXk4CDZH9R0TEXjAt9bFYLF8nD\nTwZCuMd8M6T5cseHYsNWcGfTkr4qV48KE799eyxygg0KJEVTj7CwLh+nbSvhBHeT\naBXC6vs/GUldf9uBIrfMFb2Q/WDAhdKdvPh7+xcb+wKBgQDexS+b12IDORB2Pssi\nj8vucizxcZLfED26fLS8bOQ3wmd8nuUR/lsmy9cpickHaNaCVUxj1p0DbKtfFNrM\nEdAOsFGcsrdHSGOUBfRCIZ5Ty4iMAsBY1m0vB0X/VcPJmXkCW2wK9USG4gddEPeU\n01L1qHtz01Pk61zaMuLePyKf1wKBgQDZvWgEzQ4M+aZIdjCk8+xjPpHNEJJz2FiI\ndBjbHM23Vy4KNWUYJnLHlSktR012Hif/JxMw3GtF5SS4WC6Y3KFhLiIosVAfik1k\nTtvnDmDMFheqCWQbrdTl6syYXLQl37KaiYytXe1v60gfBn+UY3cJjyBRfjPuM7WW\nJP1AZvjCnwKBgQCz4TdjOFSdU5u2T1gJrWE3RhyCTXoSAnRFvGLYb3kMiT61Azzm\n/aMuvZQcp3SbNg1YKnZHe8lHNZ1fZmCSPaPp6HfN9wVFWu+FXBVyvOCyuvukSqh0\nU5jQS6g62E8C35k1zQp+ArR10deuT4ALPWSUlpow2ai5hU9xpXtJiGN1+wKBgD85\npniuakQOQeCMoTdktOFki8W16DDHQ33r6EPHq1xvbij8tCw9DdsyTtCdAbsoqoiG\neiYX+vZCwVTeFjnA5wNm9/hE9HUUHcDgvS3smOLqD1kKfQ0kfst8UIh1csIEoMIK\n6tR0j7uN4FVR973I3Anki4feU4n5beL5Pqhyvg0VAoGBALOZ5GggaWvEPh1Pk1hX\nn7W9lqwRYMfkWILN12gd47jJ9B7Syb27vgRA50xZuLUSmg1Pk21wDea8+Kn1aAJg\njcYZ4nfiQNeMMT7X6uGw3MMoXk4nMQHK8DC7S73Oyxp0T82Gxw+blQFcVTEjWAbt\n0BfI4Yk7TViWktQFbJr4c+Ow\n-----END PRIVATE KEY-----\n",
+  "client_email": "provaa3-ferramentas-amigos@provaa3.iam.gserviceaccount.com",
+  "client_id": "107013187463139130334",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/provaa3-ferramentas-amigos%40provaa3.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
